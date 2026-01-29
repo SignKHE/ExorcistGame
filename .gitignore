@@ -12,6 +12,14 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Unity UI Toolkit Schema (Auto-generated)
+/[Uu]IElementsSchema/
+
+# JetBrains Rider / IntelliJ
+.idea/
+*.sln.iml
+
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
