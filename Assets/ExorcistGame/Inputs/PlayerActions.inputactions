@@ -8,12 +8,12 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "5b5674d5-ffb0-44bf-87e9-b74f9aa117b0",
-                    "expectedControlType": "",
-                    "processors": "",
+                    "expectedControlType": "Vector2",
+                    "processors": "NormalizeVector2",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
