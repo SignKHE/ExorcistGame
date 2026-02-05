@@ -16,7 +16,7 @@ namespace ExorcistGame.Map
                 
                 AddComponent(entity, new MapConfig
                 {
-                    MapPrefab = GetEntity(authoring.mapPrefab, TransformUsageFlags.Dynamic)
+                    ChunkPrefab = GetEntity(authoring.mapPrefab, TransformUsageFlags.Dynamic)
                 });
             }
         }
