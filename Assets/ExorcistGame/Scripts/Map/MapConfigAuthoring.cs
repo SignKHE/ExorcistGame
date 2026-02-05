@@ -6,7 +6,7 @@ namespace ExorcistGame.Map
     public class MapConfigAuthoring  : MonoBehaviour
     {
         [SerializeField]
-        private GameObject mapPrefab;
+        private GameObject chunkPrefab;
         
         public class MapConfigBaker : Baker<MapConfigAuthoring>
         {
@@ -16,7 +16,7 @@ namespace ExorcistGame.Map
                 
                 AddComponent(entity, new MapConfig
                 {
-                    ChunkPrefab = GetEntity(authoring.mapPrefab, TransformUsageFlags.Dynamic)
+                    ChunkPrefab = GetEntity(authoring.chunkPrefab, TransformUsageFlags.Dynamic)
                 });
             }
         }
