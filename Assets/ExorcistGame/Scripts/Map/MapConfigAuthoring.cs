@@ -5,8 +5,9 @@ namespace ExorcistGame.Map
 {
     public class MapConfigAuthoring  : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject chunkPrefab;
+        [SerializeField] private float chunkSize = 50f;
+        [SerializeField] private int viewPrefab = 1;
+        [SerializeField] private GameObject chunkPrefab;
         
         public class MapConfigBaker : Baker<MapConfigAuthoring>
         {
@@ -16,6 +17,8 @@ namespace ExorcistGame.Map
                 
                 AddComponent(entity, new MapConfig
                 {
+                    ChunkSize = authoring.chunkSize,
+                    ViewDistance = authoring.viewPrefab,
                     ChunkPrefab = GetEntity(authoring.chunkPrefab, TransformUsageFlags.Dynamic)
                 });
             }

@@ -10,7 +10,7 @@ namespace ExorcistGame.Map
         /// </summary>
         public float ChunkSize;
         /// <summary>
-        /// 청크가 존재할 수 있는 플레이어와의 거리
+        /// 청크가 존재할 수 있는 플레이어와의 거리 (청크 단위)
         /// </summary>
         public int ViewDistance;
         /// <summary>
