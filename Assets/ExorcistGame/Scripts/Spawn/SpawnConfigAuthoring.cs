@@ -12,7 +12,7 @@ namespace ExorcistGame.Spawn
         {
             public override void Bake(SpawnConfigAuthoring authoring)
             {
-                var entity = GetEntity(TransformUsageFlags.None);
+                Entity entity = GetEntity(TransformUsageFlags.None);
                 
                 AddComponent(entity, new SpawnConfig
                 {
