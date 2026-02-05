@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233d601cd05843c0a8f8a8c7e3e673d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Map.MapConfigAuthoring
-  mapPrefab: {fileID: 4395614072053608012, guid: 0a391675e7e7ae845af6379bb465cc92, type: 3}
+  chunkPrefab: {fileID: 4395614072053608012, guid: 0a391675e7e7ae845af6379bb465cc92, type: 3}
 --- !u!4 &521069265
 Transform:
   m_ObjectHideFlags: 0
