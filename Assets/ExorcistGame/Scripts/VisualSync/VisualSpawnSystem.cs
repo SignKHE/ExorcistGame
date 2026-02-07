@@ -50,8 +50,8 @@ namespace ExorcistGame.VisualSync
                  LocalTransform transform = SystemAPI.GetComponent<LocalTransform>(entity);
                  GameObject visualGameObject = CharacterPoolManager.Instance.GetCharacter(ECharacterType.Monster);
                  visualGameObject.transform.position = transform.Position;
+                 visualGameObject.SetActive(true);
                  EntityManager.AddComponentData(entity, new VisualData() {VisualObject = visualGameObject});
-                 EntityManager.AddComponentData(entity, new VisualSyncTag());
             }
 
             // Despawn 처리
