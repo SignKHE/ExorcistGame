@@ -1,3 +1,4 @@
+using ExorcistGame.VisualSync;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -32,7 +33,8 @@ namespace ExorcistGame.Spawn
                     float3 randomOffset = _random.NextFloat3Direction() * _random.NextFloat(0, request.ValueRO.Radius);
                     randomOffset.y = 0;
                     float3 finalPos = request.ValueRO.Position + randomOffset;
-                    ecb.SetComponent(newMonster, LocalTransform.FromPosition(finalPos));
+                    ecb.AddComponent(newMonster, LocalTransform.FromPosition(finalPos));
+                    ecb.AddComponent(newMonster, new VisualSyncTag());
                 }
                 ecb.DestroyEntity(entity);
             }
