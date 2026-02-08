@@ -890,6 +890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.GameSceneMng
   spawnManager: {fileID: 1708897152}
+  inGameViewPrefab: {fileID: 2746284520762386618, guid: 44e93b684e1e297419c271b8e3103efc, type: 3}
 --- !u!4 &1708897151
 Transform:
   m_ObjectHideFlags: 0
