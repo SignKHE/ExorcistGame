@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.UI.InGameView.InGameView
   viewCanvasGroup: {fileID: 3022400548534698942}
+  timerText: {fileID: 4688142395736042144}
 --- !u!1 &2976084687695374001
 GameObject:
   m_ObjectHideFlags: 0
