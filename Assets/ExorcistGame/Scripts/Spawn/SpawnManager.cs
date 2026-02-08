@@ -18,16 +18,14 @@ namespace ExorcistGame.Spawn
         /// <summary>
         /// 스폰 요청 함수
         /// </summary>
-        /// <param name="position">스폰 위치</param>
         /// <param name="count">스폰 갯수</param>
         /// <param name="radius">스폰 반경</param>
-        public void RequestSpawn(Vector3 position, int count, float radius)
+        public void RequestSpawn(int count, float radius)
         {
             Entity requestEntity = _em.CreateEntity(_requestArchetype);
             
             _em.SetComponentData(requestEntity, new SpawnRequestData
             {
-                Position = position,
                 Count = count,
                 Radius = radius
             });

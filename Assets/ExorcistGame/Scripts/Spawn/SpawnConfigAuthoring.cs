@@ -7,6 +7,8 @@ namespace ExorcistGame.Spawn
     {
         [SerializeField]
         private GameObject monsterPrefab;
+        [SerializeField]
+        private float radius = 15.0f;
         
         private class SpawnConfigBaker : Baker<SpawnConfigAuthoring>
         {
@@ -16,7 +18,8 @@ namespace ExorcistGame.Spawn
                 
                 AddComponent(entity, new SpawnConfig
                 {
-                    MonsterPrefab = GetEntity(authoring.monsterPrefab, TransformUsageFlags.Dynamic)
+                    MonsterPrefab = GetEntity(authoring.monsterPrefab, TransformUsageFlags.Dynamic),
+                    Radius = authoring.radius
                 });
             }
         }

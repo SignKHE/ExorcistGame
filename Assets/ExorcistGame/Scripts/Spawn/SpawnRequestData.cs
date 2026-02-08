@@ -6,10 +6,6 @@ namespace ExorcistGame.Spawn
     public struct SpawnRequestData : IComponentData
     {
         /// <summary>
-        /// 스폰 위치
-        /// </summary>
-        public float3 Position;
-        /// <summary>
         /// 스폰할 몬스터의 갯수
         /// </summary>
         public int Count;

@@ -9,5 +9,9 @@ namespace ExorcistGame.Spawn
         /// 스폰하는 몬스터의 프리팹
         /// </summary>
         public Entity MonsterPrefab;
+        /// <summary>
+        /// 몬스터가 스폰하는 반경
+        /// </summary>
+        public float Radius;
     }
 }
