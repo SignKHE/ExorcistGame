@@ -1,3 +1,4 @@
+using ExorcistGame.Character;
 using ExorcistGame.VisualSync;
 using Unity.Burst;
 using Unity.Entities;
@@ -10,12 +11,17 @@ namespace ExorcistGame.Spawn
     public partial struct SpawnProcessSystem : ISystem
     {
         private Random _random;
+        /// <summary>
+        /// 몬스터 쿼리
+        /// </summary>
+        private EntityQuery _monsterQuery;
 
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
             uint seed = (uint)System.DateTime.Now.Ticks + 39;
             _random = new Unity.Mathematics.Random( seed: seed);
+            _monsterQuery = state.GetEntityQuery(ComponentType.ReadOnly<MonsterTag>());
         }
 
         [BurstCompile]
@@ -25,6 +31,13 @@ namespace ExorcistGame.Spawn
             if(!SystemAPI.TryGetSingletonEntity<PlayerTag>(out var playerEntity)) return;
             // 스폰 정보 싱글톤 엔티티 가져오기 (없다면 시스템 종료)
             if (!SystemAPI.TryGetSingleton<SpawnConfig>(out SpawnConfig config)) return;
+
+            // 현재 몬스터 갯수 가져오기
+            int currentMonsterCount = _monsterQuery.CalculateEntityCount();
+            // 현재 스폰 가능한 몬스터 갯수가 남아있지 않다면 스폰 로직 종료
+            if(currentMonsterCount >= config.SpawnMax) return;
+            // 남은 스폰 갯수 저장
+            int leftSpawnCount = config.SpawnMax - currentMonsterCount;
 
             var ecbSingleton = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
@@ -39,7 +52,9 @@ namespace ExorcistGame.Spawn
 
             foreach (var (request, entity) in SystemAPI.Query<RefRO<SpawnRequestData>>().WithEntityAccess())
             {
-                for (int i = 0; i < request.ValueRO.Count; i++)
+                // 요청받은 수보다 생성 가능한 몬스터 수가 적으면 그만큼만 생성
+                int spawnCount = math.min(request.ValueRO.Count, leftSpawnCount);
+                for (int i = 0; i < spawnCount; i++)
                 {
                     Entity newMonster = ecb.Instantiate(config.MonsterPrefab);
                     float3 randomOffset = _random.NextFloat3Direction() * _random.NextFloat(0, request.ValueRO.Radius);

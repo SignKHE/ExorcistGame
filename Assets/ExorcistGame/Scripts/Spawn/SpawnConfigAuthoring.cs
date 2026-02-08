@@ -9,6 +9,8 @@ namespace ExorcistGame.Spawn
         private GameObject monsterPrefab;
         [SerializeField]
         private float radius = 15.0f;
+        [SerializeField]
+        private int spawnMax = 60;
         
         private class SpawnConfigBaker : Baker<SpawnConfigAuthoring>
         {
