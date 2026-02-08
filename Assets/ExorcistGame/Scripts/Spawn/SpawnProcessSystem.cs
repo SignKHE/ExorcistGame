@@ -14,7 +14,8 @@ namespace ExorcistGame.Spawn
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
-            _random = new Unity.Mathematics.Random(39);
+            uint seed = (uint)System.DateTime.Now.Ticks + 39;
+            _random = new Unity.Mathematics.Random( seed: seed);
         }
 
         [BurstCompile]
