@@ -13,11 +13,20 @@ namespace ExorcistGame
             Debug.Log("GameSceneMng Start");
 
             await Awaitable.WaitForSecondsAsync(3f);
-            spawnManager.RequestSpawn(Vector3.zero, 30, 10f);
+            spawnManager.RequestSpawn( 30, 10f);
             await Awaitable.WaitForSecondsAsync(3f);
-            spawnManager.RequestSpawn(Vector3.zero, 30, 10f);
+            spawnManager.RequestSpawn(30, 10f);
             await Awaitable.WaitForSecondsAsync(3f);
-            spawnManager.RequestSpawn(Vector3.zero, 30, 10f);
+            spawnManager.RequestSpawn( 30, 10f);
+            await Awaitable.WaitForSecondsAsync(3f);
+            spawnManager.RequestSpawn( 30, 10f);
+            await Awaitable.WaitForSecondsAsync(3f);
+            spawnManager.RequestSpawn( 30, 10f);
+            await Awaitable.WaitForSecondsAsync(3f);
+            spawnManager.RequestSpawn( 30, 10f);
         }
+        
+        
+        
     }
 }
