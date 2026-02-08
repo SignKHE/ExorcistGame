@@ -21,7 +21,8 @@ namespace ExorcistGame.Spawn
                 AddComponent(entity, new SpawnConfig
                 {
                     MonsterPrefab = GetEntity(authoring.monsterPrefab, TransformUsageFlags.Dynamic),
-                    Radius = authoring.radius
+                    Radius = authoring.radius,
+                    SpawnMax = authoring.spawnMax
                 });
             }
         }
