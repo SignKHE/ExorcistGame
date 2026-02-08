@@ -23,7 +23,7 @@ namespace ExorcistGame.UI
         /// <summary>
         /// Dispose할 바인딩 모음
         /// </summary>
-        private readonly CompositeDisposable _disposables = new();
+        protected readonly CompositeDisposable disposables = new();
 
         /// <summary>
         /// View 초기화
@@ -40,7 +40,7 @@ namespace ExorcistGame.UI
             }
             
             // 기존 ViewModel과의 관계를 정리합니다.
-            _disposables.Clear();
+            disposables.Clear();
             
             // UI 상태 리셋.
             Reset();
