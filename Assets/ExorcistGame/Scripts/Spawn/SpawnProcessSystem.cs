@@ -35,7 +35,11 @@ namespace ExorcistGame.Spawn
             // 현재 몬스터 갯수 가져오기
             int currentMonsterCount = _monsterQuery.CalculateEntityCount();
             // 현재 스폰 가능한 몬스터 갯수가 남아있지 않다면 스폰 로직 종료
-            if(currentMonsterCount >= config.SpawnMax) return;
+            if(currentMonsterCount >= config.SpawnMax)
+            {
+                //UnityEngine.Debug.Log($"Spawn Max: {config.SpawnMax} Current Monster Count: {currentMonsterCount}");
+                return;
+            }
             // 남은 스폰 갯수 저장
             int leftSpawnCount = config.SpawnMax - currentMonsterCount;
 
@@ -56,12 +60,14 @@ namespace ExorcistGame.Spawn
                 int spawnCount = math.min(request.ValueRO.Count, leftSpawnCount);
                 for (int i = 0; i < spawnCount; i++)
                 {
+                    //UnityEngine.Debug.Log($"몬스터 엔티티 스폰");
                     Entity newMonster = ecb.Instantiate(config.MonsterPrefab);
                     float3 randomOffset = _random.NextFloat3Direction() * _random.NextFloat(0, request.ValueRO.Radius);
                     randomOffset.y = 0;
                     float3 finalPos = spawnPosition + randomOffset;
                     ecb.AddComponent(newMonster, LocalTransform.FromPosition(finalPos));
                     ecb.AddComponent(newMonster, new VisualSyncTag());
+                    ecb.AddComponent(newMonster, new MonsterTag());
                 }
                 ecb.DestroyEntity(entity);
             }
