@@ -26,7 +26,7 @@ namespace ExorcistGame.CameraTool
             
             cam.transform.position = _target.position + _camDirection * distance;
             
-            cam.transform.rotation = Quaternion.LookRotation(cam.transform.position - _target.position);
+            cam.transform.rotation = Quaternion.LookRotation(_target.position - cam.transform.position);
         }
 
         public void SetTarget(Transform targetTransform)
