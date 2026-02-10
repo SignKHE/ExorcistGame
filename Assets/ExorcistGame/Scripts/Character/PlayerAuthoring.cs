@@ -1,3 +1,4 @@
+using ExorcistGame.VisualSync;
 using UnityEngine;
 using Unity.Entities;
 
@@ -14,6 +15,7 @@ namespace ExorcistGame.Character
                 Entity entity = GetEntity(TransformUsageFlags.Dynamic);
                 
                 AddComponent(entity, new PlayerTag());
+                AddComponent(entity, new VisualSyncTag());
                 AddComponent(entity, new MovementData());
             }
         }
