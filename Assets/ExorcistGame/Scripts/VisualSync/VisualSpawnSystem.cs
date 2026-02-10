@@ -1,4 +1,5 @@
 using System;
+using ExorcistGame.Character;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
@@ -48,7 +49,16 @@ namespace ExorcistGame.VisualSync
             foreach (var entity in toSpawn)
             {
                  LocalTransform transform = SystemAPI.GetComponent<LocalTransform>(entity);
-                 GameObject visualGameObject = CharacterPoolManager.Instance.GetCharacter(ECharacterType.Monster);
+                 ECharacterType characterType = ECharacterType.Monster;
+                 if (SystemAPI.HasComponent<PlayerTag>(entity))
+                 { 
+                     characterType = ECharacterType.Player;   
+                 }
+                 else if (SystemAPI.HasComponent<MonsterTag>(entity))
+                 {
+                     characterType = ECharacterType.Monster;
+                 }
+                 GameObject visualGameObject = CharacterPoolManager.Instance.GetCharacter(characterType);
                  visualGameObject.transform.position = transform.Position;
                  visualGameObject.SetActive(true);
                  EntityManager.AddComponentData(entity, new VisualData() {VisualObject = visualGameObject});
@@ -57,8 +67,18 @@ namespace ExorcistGame.VisualSync
             // Despawn 처리
             foreach (var entity in toDespawn)
             {
+                ECharacterType characterType = ECharacterType.Monster;
+                if (SystemAPI.HasComponent<PlayerTag>(entity))
+                { 
+                    characterType = ECharacterType.Player;   
+                }
+                else if (SystemAPI.HasComponent<MonsterTag>(entity))
+                {
+                    characterType = ECharacterType.Monster;
+                }
+                
                 VisualData visualData = EntityManager.GetComponentData<VisualData>(entity);
-                CharacterPoolManager.Instance.ReturnCharacter(visualData.VisualObject, ECharacterType.Monster);
+                CharacterPoolManager.Instance.ReturnCharacter(visualData.VisualObject, characterType);
                 
                 // Cleanup 제거 -> 엔티티 완전 소멸
                 EntityManager.RemoveComponent<VisualData>(entity);
