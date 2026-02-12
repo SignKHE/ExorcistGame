@@ -8,7 +8,7 @@ namespace ExorcistGame.CameraTool
         [SerializeField] private Camera cam;
         [SerializeField] private float distance = 15f;
 
-        private readonly Vector3 _camDirection = new Vector3(0f, 1f, 1f).normalized;
+        private readonly Vector3 _camDirection = new Vector3(0f, 1f, -1f).normalized;
 
         private Transform _target;
         
