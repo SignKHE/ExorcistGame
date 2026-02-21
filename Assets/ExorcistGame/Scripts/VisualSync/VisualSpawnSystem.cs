@@ -54,7 +54,7 @@ namespace ExorcistGame.VisualSync
                  { 
                      characterType = ECharacterType.Player;   
                  }
-                 else if (SystemAPI.HasComponent<MonsterTag>(entity))
+                 else if (SystemAPI.HasComponent<MonsterData>(entity))
                  {
                      characterType = ECharacterType.Monster;
                  }
@@ -72,7 +72,7 @@ namespace ExorcistGame.VisualSync
                 { 
                     characterType = ECharacterType.Player;   
                 }
-                else if (SystemAPI.HasComponent<MonsterTag>(entity))
+                else if (SystemAPI.HasComponent<MonsterData>(entity))
                 {
                     characterType = ECharacterType.Monster;
                 }
