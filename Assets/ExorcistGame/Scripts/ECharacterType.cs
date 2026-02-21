@@ -1,6 +1,6 @@
 namespace ExorcistGame
 {
-    public enum ECharacterType
+    public enum ECharacterType : byte
     {
         Player,
         Monster
