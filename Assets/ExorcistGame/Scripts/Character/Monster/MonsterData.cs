@@ -5,14 +5,20 @@ namespace ExorcistGame.Character
 {
     public struct MonsterData : IComponentData
     {
-        public EMonsterType Type;
+        public EMonsterClassType ClassType;
+        public EMonsterSpeciesType SpeciesType;
     }
 
     [Flags]
-    public enum EMonsterType : byte
+    public enum EMonsterClassType : byte
     {
         Normal = 1 << 0,
         Elite = 1 << 1,
         Boss = 1 << 2,
+    }
+
+    public enum EMonsterSpeciesType : byte
+    {
+        None = 0
     }
 }
