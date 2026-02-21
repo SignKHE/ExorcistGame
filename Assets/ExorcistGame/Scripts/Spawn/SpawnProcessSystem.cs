@@ -21,7 +21,7 @@ namespace ExorcistGame.Spawn
             state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
             uint seed = (uint)System.DateTime.Now.Ticks + 39;
             _random = new Unity.Mathematics.Random( seed: seed);
-            _monsterQuery = state.GetEntityQuery(ComponentType.ReadOnly<MonsterTag>());
+            _monsterQuery = state.GetEntityQuery(ComponentType.ReadOnly<MonsterData>());
         }
 
         [BurstCompile]
@@ -67,7 +67,7 @@ namespace ExorcistGame.Spawn
                     float3 finalPos = spawnPosition + randomOffset;
                     ecb.AddComponent(newMonster, LocalTransform.FromPosition(finalPos));
                     ecb.AddComponent(newMonster, new VisualSyncTag());
-                    ecb.AddComponent(newMonster, new MonsterTag());
+                    ecb.AddComponent(newMonster, new MonsterData());
                 }
                 ecb.DestroyEntity(entity);
             }
