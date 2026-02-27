@@ -34,7 +34,7 @@ namespace ExorcistGame.Skill
         /// </summary>
         public Entity Instigator;
 
-        ProjectileData(float damage, float3 direction, float speed, float lifeTime, Entity instigator, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
+        public ProjectileData(float damage, float3 direction, float speed, float lifeTime, Entity instigator, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
         {
             Damage = damage;
             Direction = direction;

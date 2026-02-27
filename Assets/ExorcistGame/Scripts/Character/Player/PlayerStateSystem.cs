@@ -1,4 +1,5 @@
 using ExorcistGame.Character.State;
+using ExorcistGame.Skill;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -12,8 +13,8 @@ namespace ExorcistGame.Character
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var (playerState, movementData, playerTransform, attackData) 
-                     in SystemAPI.Query<RefRW<StateData>, RefRO<MovementData>, RefRW<LocalTransform>, RefRW<AttackData>>().WithAll<PlayerTag>())
+            foreach (var (playerState, movementData, playerTransform, attackData, playerEntity) 
+                     in SystemAPI.Query<RefRW<StateData>, RefRO<MovementData>, RefRW<LocalTransform>, RefRW<AttackData>>().WithAll<PlayerTag>().WithEntityAccess())
             {
                 float2 movement = movementData.ValueRO.MoveDirection;
                 float3 playerPos = playerTransform.ValueRO.Position;
@@ -86,6 +87,13 @@ namespace ExorcistGame.Character
                             else if (attackData.ValueRO.AttackTimer == 0f)
                             {
                                 // 여기서 공격
+                                DynamicBuffer<ProjectileSpawnBuffer> spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnBuffer>(playerEntity);
+
+                                spawnBuffer.Add(new ProjectileSpawnBuffer()
+                                {
+                                    SpawnLocation = playerTransform.ValueRO.Position,
+                                    Data = new ProjectileData(damage:20f,direction:targetDirection,speed:10f,lifeTime:10f,playerEntity)
+                                });
                             }
                             else if (attackData.ValueRO.AttackTimer < attackData.ValueRO.AttackTime)
                             {

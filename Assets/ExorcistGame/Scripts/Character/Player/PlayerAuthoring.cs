@@ -1,4 +1,5 @@
 using ExorcistGame.Character.State;
+using ExorcistGame.Skill;
 using ExorcistGame.VisualSync;
 using UnityEngine;
 using Unity.Entities;
@@ -29,6 +30,7 @@ namespace ExorcistGame.Character
                     ReloadTimer = 0f
                 });
                 AddComponent(entity, new StateData() {State = EState.Idle});
+                AddBuffer<ProjectileSpawnBuffer>(entity);
             }
         }
     }
