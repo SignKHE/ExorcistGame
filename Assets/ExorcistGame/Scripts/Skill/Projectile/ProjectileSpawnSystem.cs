@@ -38,6 +38,8 @@ namespace ExorcistGame.Skill
         
         public void Execute(Entity spawnerEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<ProjectileSpawnBuffer> spawnBuffer)
         {
+            if (spawnBuffer.IsEmpty) return;
+            
             for (int i = 0; i < spawnBuffer.Length; i++)
             {
                 var request = spawnBuffer[i];
@@ -45,7 +47,7 @@ namespace ExorcistGame.Skill
                 ECB.AddComponent(sortKey, spawnedProjectile, new LocalTransform(){Position = request.SpawnLocation});
                 ECB.AddComponent(sortKey, spawnedProjectile, request.Data);
             }
-            ECB.RemoveComponent<ProjectileSpawnBuffer>(sortKey, spawnerEntity);
+            spawnBuffer.Clear();
         }
     }
 }
