@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace ExorcistGame.Skill
 {
-    public struct ProjectileData : IComponentData
+    public struct ProjectileData : IComponentData, IEnableableComponent
     {
         /// <summary>
         /// 투사체 데미지
@@ -33,7 +33,6 @@ namespace ExorcistGame.Skill
         /// 투사체 생성 주체
         /// </summary>
         public Entity Instigator;
-
         public ProjectileData(float damage, float3 direction, float speed, float lifeTime, Entity instigator, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
         {
             Damage = damage;
@@ -44,6 +43,17 @@ namespace ExorcistGame.Skill
             TriggerType = triggerType;
             Instigator = instigator;
         }
+
+        public static ProjectileData Empty = new ProjectileData
+        {
+            Damage = 0,
+            Direction = float3.zero,
+            Speed = 0,
+            LifeTime = 0f,
+            LeftLife = 0f,
+            TriggerType = EProjectileTriggerType.SingleTarget,
+            Instigator = Entity.Null
+        };
     }
 
     public enum EProjectileTriggerType : byte

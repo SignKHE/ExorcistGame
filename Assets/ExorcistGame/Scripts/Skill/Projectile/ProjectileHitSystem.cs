@@ -2,8 +2,10 @@ using ExorcistGame.Damage;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Systems;
+using Unity.Transforms;
 
 namespace ExorcistGame.Skill
 {
@@ -89,7 +91,7 @@ namespace ExorcistGame.Skill
                 bool targetIsPlayer = PlayerLookup.HasComponent(targetEntity);
 
                 // 투사체와 타겟이 같은 편이 아닐때 충돌 판정
-                if (projectileIsPlayer != targetIsPlayer)
+                if (projectileIsPlayer != targetIsPlayer )
                 {
                     // 투사체에 Hit버퍼 생성.
                     int sortKey = projectileEntity.Index;
@@ -118,6 +120,7 @@ namespace ExorcistGame.Skill
     public partial struct ProjectileHitJob : IJobEntity
     {
         public EntityCommandBuffer.ParallelWriter ECB;
+        public NativeQueue<Entity>.ParallelWriter PoolWriter;
 
         public void Execute(Entity projectileEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<HitBuffer> hits)
         {
@@ -127,7 +130,11 @@ namespace ExorcistGame.Skill
 
                 ECB.AddBuffer<DamageBufferElement>(sortKey, targetEntity);
                 ECB.AppendToBuffer(sortKey, targetEntity, hits[0].DamageData);
-                ECB.DestroyEntity(sortKey, projectileEntity);
+                
+                ECB.SetComponent(sortKey, projectileEntity, LocalTransform.FromPosition(new float3(0, -100f, 0)));
+                ECB.SetComponent(sortKey,projectileEntity, ProjectileData.Empty);
+                ECB.SetComponentEnabled<ProjectileData>(sortKey, projectileEntity, false);
+                PoolWriter.Enqueue(projectileEntity);
             }
         }
     }

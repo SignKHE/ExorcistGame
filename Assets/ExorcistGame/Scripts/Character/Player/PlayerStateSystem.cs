@@ -92,7 +92,7 @@ namespace ExorcistGame.Character
 
                                 spawnBuffer.Add(new ProjectileSpawnBuffer()
                                 {
-                                    SpawnLocation = playerTransform.ValueRO.Position,
+                                    SpawnLocation = playerTransform.ValueRO.Position + new float3(0f, 1f, 0f),
                                     Data = new ProjectileData(damage:20f,direction:targetDirection,speed:10f,lifeTime:10f,playerEntity)
                                 });
                             }

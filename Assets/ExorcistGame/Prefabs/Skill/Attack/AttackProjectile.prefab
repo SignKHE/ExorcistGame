@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1648706190786787171}
   - component: {fileID: 8825660908161706085}
   - component: {fileID: 8572427857646222949}
+  - component: {fileID: 3559764579861441996}
   m_Layer: 0
   m_Name: AttackProjectile
   m_TagString: Untagged
@@ -106,9 +107,21 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3559764579861441996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5453051321186680474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0e6691e46c4352a0dd14940f8e5dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Skill.ProjectileDataAuthoring
