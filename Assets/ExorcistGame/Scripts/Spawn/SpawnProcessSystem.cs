@@ -1,5 +1,6 @@
 using System.Linq;
 using ExorcistGame.Character;
+using ExorcistGame.Damage;
 using ExorcistGame.VisualSync;
 using Unity.Burst;
 using Unity.Entities;
@@ -78,6 +79,7 @@ namespace ExorcistGame.Spawn
                     ecb.AddComponent(newMonster, new VisualSyncTag());
                     ecb.AddComponent(newMonster, new MonsterData());
                     ecb.AddComponent(newMonster, new CharacterTag());
+                    ecb.AddComponent(newMonster, new HPData() { MaxHP = 100f, HP = 100f});
                 }
                 ecb.DestroyEntity(entity);
             }
