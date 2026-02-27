@@ -1,3 +1,4 @@
+using System.Linq;
 using ExorcistGame.Character;
 using ExorcistGame.VisualSync;
 using Unity.Burst;
@@ -27,8 +28,18 @@ namespace ExorcistGame.Spawn
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            // 플레이어 태그를 가진 플레이어 엔티티 가져오기 (없다면 시스템 종료)
+            // 플레이어 태그를 가진 캐릭터 엔티티를 가져오고 위치정보 가져오기 (없다면 시스템 종료)
+            if(! (SystemAPI.QueryBuilder().WithAll<PlayerTag, CharacterTag>().Build().CalculateEntityCount() > 0) ) return;
+            
+            float3 playerPosition = float3.zero;
+            foreach (var playerTransform 
+                     in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<PlayerTag>().WithAll<CharacterTag>())
+            {
+                playerPosition = playerTransform.ValueRO.Position;
+            }
+            
             if(!SystemAPI.TryGetSingletonEntity<PlayerTag>(out var playerEntity)) return;
+            
             // 스폰 정보 싱글톤 엔티티 가져오기 (없다면 시스템 종료)
             if (!SystemAPI.TryGetSingleton<SpawnConfig>(out SpawnConfig config)) return;
 
@@ -45,9 +56,6 @@ namespace ExorcistGame.Spawn
 
             var ecbSingleton = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
-            
-            // 플레이어 위치 정보 가져오기
-            float3 playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
             
             float angle = _random.NextFloat(min:0.0f,max:1.0f) * math.PI * 2.0f;
             math.sincos(angle, out float sin, out float cos);
