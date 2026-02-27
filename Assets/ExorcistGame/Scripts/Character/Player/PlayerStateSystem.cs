@@ -29,6 +29,8 @@ namespace ExorcistGame.Character
                 // 만약 움직임이 없는데 Move 상태라면 Idle 상태로 변경
                 else if (playerState.ValueRO.State == EState.Move)
                 {
+                    attackData.ValueRW.AttackTimer = 0;
+                    attackData.ValueRW.ReloadTimer = 0;
                     playerState.ValueRW.State = EState.Idle;
                 }
                 
@@ -84,20 +86,20 @@ namespace ExorcistGame.Character
                             {
                                 attackData.ValueRW.ReloadTimer += deltaTime;
                             }
-                            else if (attackData.ValueRO.AttackTimer == 0f)
-                            {
-                                // 여기서 공격
-                                UnityEngine.Debug.Log($"플레이어 공격");
-                                DynamicBuffer<ProjectileSpawnBuffer> spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnBuffer>(playerEntity);
-
-                                spawnBuffer.Add(new ProjectileSpawnBuffer()
-                                {
-                                    SpawnLocation = playerTransform.ValueRO.Position + new float3(0f, 1f, 0f),
-                                    Data = new ProjectileData(damage:20f,direction:targetDirection,speed:10f,lifeTime:10f,playerEntity)
-                                });
-                            }
                             else if (attackData.ValueRO.AttackTimer < attackData.ValueRO.AttackTime)
                             {
+                                if (attackData.ValueRO.AttackTimer == 0f)
+                                {
+                                    // 여기서 공격
+                                    UnityEngine.Debug.Log($"플레이어 공격");
+                                    DynamicBuffer<ProjectileSpawnBuffer> spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnBuffer>(playerEntity);
+
+                                    spawnBuffer.Add(new ProjectileSpawnBuffer()
+                                    {
+                                        SpawnLocation = playerTransform.ValueRO.Position + new float3(0f, 1f, 0f),
+                                        Data = new ProjectileData(damage:20f,direction:targetDirection,speed:10f,lifeTime:10f,playerEntity)
+                                    });
+                                }
                                 attackData.ValueRW.AttackTimer += deltaTime;
                             }
                             else
