@@ -15,7 +15,7 @@ namespace ExorcistGame.Character
             float speed = 5f;
 
             foreach (var (transform, movementDirection) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementData>>()
-                .WithAll<PlayerTag>())
+                .WithAll<PlayerTag, CharacterTag>())
             {
                 float2 movement = movementDirection.ValueRO.MoveDirection;
 
