@@ -17,6 +17,7 @@ namespace ExorcistGame.Character
                 Entity entity = GetEntity(TransformUsageFlags.Dynamic);
                 
                 AddComponent(entity, new PlayerTag());
+                AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new VisualSyncTag());
                 AddComponent(entity, new MovementData() {MoveDirection = float2.zero});
                 AddComponent(entity, new AttackData() {
