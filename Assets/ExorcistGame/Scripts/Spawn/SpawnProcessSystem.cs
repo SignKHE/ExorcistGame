@@ -36,6 +36,7 @@ namespace ExorcistGame.Spawn
                      in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<PlayerTag>().WithAll<CharacterTag>())
             {
                 playerPosition = playerTransform.ValueRO.Position;
+                break;
             }
             
             if(!SystemAPI.TryGetSingletonEntity<PlayerTag>(out var playerEntity)) return;
