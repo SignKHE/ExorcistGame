@@ -44,7 +44,7 @@ namespace ExorcistGame.Skill
             {
                 var request = spawnBuffer[i];
                 Entity spawnedProjectile = ECB.Instantiate(sortKey, Config.ProjectilePrefab);
-                ECB.AddComponent(sortKey, spawnedProjectile, new LocalTransform(){Position = request.SpawnLocation});
+                ECB.AddComponent(sortKey, spawnedProjectile, LocalTransform.FromPosition(request.SpawnLocation));
                 ECB.AddComponent(sortKey, spawnedProjectile, request.Data);
             }
             spawnBuffer.Clear();

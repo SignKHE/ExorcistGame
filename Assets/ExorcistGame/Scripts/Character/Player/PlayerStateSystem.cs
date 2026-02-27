@@ -87,6 +87,7 @@ namespace ExorcistGame.Character
                             else if (attackData.ValueRO.AttackTimer == 0f)
                             {
                                 // 여기서 공격
+                                UnityEngine.Debug.Log($"플레이어 공격");
                                 DynamicBuffer<ProjectileSpawnBuffer> spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnBuffer>(playerEntity);
 
                                 spawnBuffer.Add(new ProjectileSpawnBuffer()
@@ -101,12 +102,14 @@ namespace ExorcistGame.Character
                             }
                             else
                             {
+                                UnityEngine.Debug.Log($"플레이어 공격 초기화");
                                 attackData.ValueRW.AttackTimer = 0;
                                 attackData.ValueRW.ReloadTimer = 0;
                             }
                         }
                         else
                         {
+                            UnityEngine.Debug.Log($"플레이어 공격 초기화");
                             attackData.ValueRW.AttackTimer = 0;
                             attackData.ValueRW.ReloadTimer = 0;
                         }

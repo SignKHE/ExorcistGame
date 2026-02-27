@@ -17,7 +17,7 @@ namespace ExorcistGame.Skill
             foreach (var (data, transform, entity) 
                      in SystemAPI.Query<RefRO<ProjectileData>, RefRW<LocalTransform>>().WithEntityAccess() )
             {
-                float3 velocity = data.ValueRO.Direction * data.ValueRO.Speed;
+                float3 velocity = data.ValueRO.Direction * data.ValueRO.Speed * deltaTime;
                 transform.ValueRW.Rotation = quaternion.LookRotationSafe(data.ValueRO.Direction, math.up());
                 transform.ValueRW.Position += velocity;
             }
