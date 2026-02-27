@@ -6,11 +6,13 @@ using Unity.Transforms;
 namespace ExorcistGame.Skill
 {
     [BurstCompile]
-    public partial struct ProjectileSystem : ISystem
+    public partial struct ProjectileMovementSystem : ISystem
     {
         public void OnUpdate(ref SystemState state)
         {
             if(!SystemAPI.TryGetSingletonEntity<ProjectileConfig>(out var config)) return;
+            
+            float deltaTime = SystemAPI.Time.DeltaTime;
 
             foreach (var (data, transform, entity) 
                      in SystemAPI.Query<RefRO<ProjectileData>, RefRW<LocalTransform>>().WithEntityAccess() )
