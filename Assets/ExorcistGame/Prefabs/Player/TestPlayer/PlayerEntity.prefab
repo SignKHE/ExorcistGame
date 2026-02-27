@@ -69,3 +69,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Character.PlayerAuthoring
   speed: 5
+  projectilePrefab: {fileID: 5453051321186680474, guid: a45ca332e44de24439366d50224ca77c, type: 3}

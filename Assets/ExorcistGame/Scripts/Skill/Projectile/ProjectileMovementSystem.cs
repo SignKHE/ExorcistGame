@@ -10,8 +10,6 @@ namespace ExorcistGame.Skill
     {
         public void OnUpdate(ref SystemState state)
         {
-            if(!SystemAPI.TryGetSingletonEntity<ProjectileConfig>(out var config)) return;
-            
             float deltaTime = SystemAPI.Time.DeltaTime;
 
             foreach (var (data, transform, entity) 

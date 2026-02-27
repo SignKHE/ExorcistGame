@@ -1,3 +1,4 @@
+using ExorcistGame.Character;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -19,11 +20,17 @@ namespace ExorcistGame.Map
         {
             //맵 설정 싱글톤 엔티티 가져오기 (없다면 시스템 종료)
             if(!SystemAPI.TryGetSingleton<MapConfig>(out var mapConfig)) return;
-            //플레이어 태그를 가진 플레이어 엔티티 가져오기 (없다면 시스템 종료)
-            if(!SystemAPI.TryGetSingletonEntity<PlayerTag>(out var playerEntity)) return;
+            // 플레이어 태그를 가진 캐릭터 엔티티를 가져오기 (없다면 시스템 종료)
+            if(! (SystemAPI.QueryBuilder().WithAll<PlayerTag, CharacterTag>().Build().CalculateEntityCount() > 0) ) return;
 
             // 플레이어 위치값 가져오기
-            float3 playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
+            float3 playerPosition = float3.zero;
+            foreach (var playerTransform 
+                     in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<PlayerTag>().WithAll<CharacterTag>())
+            {
+                playerPosition = playerTransform.ValueRO.Position;
+                break;
+            }
             
             //UnityEngine.Debug.Log($"플레이어 좌표{playerPosition.x}, {playerPosition.y}, {playerPosition.z}");
             

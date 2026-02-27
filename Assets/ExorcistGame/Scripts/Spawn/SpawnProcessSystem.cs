@@ -34,13 +34,11 @@ namespace ExorcistGame.Spawn
             
             float3 playerPosition = float3.zero;
             foreach (var playerTransform 
-                     in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<PlayerTag>().WithAll<CharacterTag>())
+                     in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<PlayerTag,CharacterTag>())
             {
                 playerPosition = playerTransform.ValueRO.Position;
                 break;
             }
-            
-            if(!SystemAPI.TryGetSingletonEntity<PlayerTag>(out var playerEntity)) return;
             
             // 스폰 정보 싱글톤 엔티티 가져오기 (없다면 시스템 종료)
             if (!SystemAPI.TryGetSingleton<SpawnConfig>(out SpawnConfig config)) return;

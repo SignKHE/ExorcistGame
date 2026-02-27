@@ -80,7 +80,7 @@ namespace ExorcistGame.Skill
 
             bool isBProjectile = ProjectileLookup.HasComponent(entityB);
             bool isATarget = TargetLookup.HasComponent(entityA);
-            
+            UnityEngine.Debug.Log("충돌잡 작동");
             // A와 B가 각각 투사체와 타겟일때 충돌 판정
             if ((isAProjectile && isBTarget) || (isBProjectile && isATarget))
             {
@@ -93,6 +93,7 @@ namespace ExorcistGame.Skill
                 // 투사체와 타겟이 같은 편이 아닐때 충돌 판정
                 if (projectileIsPlayer != targetIsPlayer )
                 {
+                    UnityEngine.Debug.Log("충돌이다");
                     // 투사체에 Hit버퍼 생성.
                     int sortKey = projectileEntity.Index;
 
@@ -120,9 +121,8 @@ namespace ExorcistGame.Skill
     public partial struct ProjectileHitJob : IJobEntity
     {
         public EntityCommandBuffer.ParallelWriter ECB;
-        public NativeQueue<Entity>.ParallelWriter PoolWriter;
 
-        public void Execute(Entity projectileEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<HitBuffer> hits)
+        public void Execute(Entity projectileEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<HitBuffer> hits, in ProjectileData data)
         {
             if (hits.Length > 0)
             {
@@ -134,7 +134,10 @@ namespace ExorcistGame.Skill
                 ECB.SetComponent(sortKey, projectileEntity, LocalTransform.FromPosition(new float3(0, -100f, 0)));
                 ECB.SetComponent(sortKey,projectileEntity, ProjectileData.Empty);
                 ECB.SetComponentEnabled<ProjectileData>(sortKey, projectileEntity, false);
-                PoolWriter.Enqueue(projectileEntity);
+
+                ECB.AppendToBuffer(sortKey, data.Instigator , new ProjectileSpawnPoolBuffer { ProjectileEntity = projectileEntity });
+                
+                hits.Clear();
             }
         }
     }

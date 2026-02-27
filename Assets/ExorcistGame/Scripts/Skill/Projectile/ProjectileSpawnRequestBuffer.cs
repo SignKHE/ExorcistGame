@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace ExorcistGame.Skill
 {
-    public struct ProjectileSpawnBuffer : IBufferElementData
+    public struct ProjectileSpawnRequestBuffer : IBufferElementData
     {
         public float3 SpawnLocation;
         public ProjectileData Data;

@@ -10,6 +10,7 @@ namespace ExorcistGame.Character
     public class PlayerAuthoring : MonoBehaviour
     {
         public float speed = 5f;
+        public GameObject projectilePrefab;
         
         private class PlayerBaker : Baker<PlayerAuthoring>
         {
@@ -30,7 +31,9 @@ namespace ExorcistGame.Character
                     ReloadTimer = 0f
                 });
                 AddComponent(entity, new StateData() {State = EState.Idle});
-                AddBuffer<ProjectileSpawnBuffer>(entity);
+                AddComponent(entity, new ProjectileSpawner(GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic)));
+                AddBuffer<ProjectileSpawnRequestBuffer>(entity);
+                AddBuffer<ProjectileSpawnPoolBuffer>(entity);
             }
         }
     }

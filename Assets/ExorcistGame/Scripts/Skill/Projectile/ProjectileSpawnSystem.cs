@@ -10,76 +10,69 @@ namespace ExorcistGame.Skill
     [BurstCompile]
     public partial struct ProjectileSpawnSystem : ISystem
     {
-        public NativeQueue<Entity> ProjectilePool;
-        
-        private bool _isInitialized;
-        
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             
-            ProjectilePool = new NativeQueue<Entity>(Allocator.Persistent);
-            _isInitialized = false;
-            
-            state.RequireForUpdate<ProjectileConfig>();
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            if(!SystemAPI.TryGetSingleton<ProjectileConfig>(out var config)) return;
-            
-            // 아직 오브젝트 풀 초기화를 하지 않았다면 초기화
-            if (!_isInitialized)
+            foreach (var (spawner, entity) in SystemAPI.Query<RefRW<ProjectileSpawner>>().WithEntityAccess())
             {
-                int poolSize = 1000;
-                
-                NativeArray<Entity> instances = new NativeArray<Entity>(poolSize, Allocator.Persistent);
-                
-                state.EntityManager.Instantiate(config.ProjectilePrefab, instances);
-
-                for (int i = 0; i < poolSize; i++)
+                // 아직 오브젝트 풀 초기화를 하지 않았다면 초기화
+                if (!spawner.ValueRO.IsInitialized)
                 {
-                    SystemAPI.SetComponent(instances[i],LocalTransform.FromPosition(new float3(0f,-100,0f)));
-                    SystemAPI.SetComponentEnabled<ProjectileData>(instances[i], false);
-                    ProjectilePool.Enqueue(instances[i]);
-                }
+                    NativeArray<Entity> instances = new NativeArray<Entity>(spawner.ValueRO.PoolSize, Allocator.Persistent);
                 
-                instances.Dispose();
-                _isInitialized = true;
-                return;
+                    state.EntityManager.Instantiate(spawner.ValueRO.ProjectilePrefab, instances);
+                    
+                    DynamicBuffer<ProjectileSpawnPoolBuffer> poolBuffer = SystemAPI.GetBuffer<ProjectileSpawnPoolBuffer>(entity);
+
+                    for (int i = 0; i < spawner.ValueRO.PoolSize; i++)
+                    {
+                        SystemAPI.SetComponent(instances[i],LocalTransform.FromPosition(new float3(0f,-100,0f)));
+                        SystemAPI.SetComponentEnabled<ProjectileData>(instances[i], false);
+                        poolBuffer.Add(new ProjectileSpawnPoolBuffer { ProjectileEntity = instances[i] });
+                    }
+                
+                    instances.Dispose();
+                    spawner.ValueRW.IsInitialized = true;
+                    return;
+                }
             }
             
-            foreach (var (spawnBuffer, spawnerEntity) in SystemAPI.Query<DynamicBuffer<ProjectileSpawnBuffer>>().WithEntityAccess())
+            
+            
+            foreach (var (spawner, spawnBuffer, spawnPoolBuffers, spawnerEntity) in SystemAPI.Query<RefRW<ProjectileSpawner>, DynamicBuffer<ProjectileSpawnRequestBuffer>, DynamicBuffer<ProjectileSpawnPoolBuffer>>().WithEntityAccess())
             {
                 if (spawnBuffer.IsEmpty) continue;
 
                 foreach (var request in spawnBuffer)
                 {
-                    if (ProjectilePool.TryDequeue(out Entity pooledProjectile))
+                    if (spawnPoolBuffers.IsEmpty)
                     {
-                        SystemAPI.SetComponent(pooledProjectile, LocalTransform.FromPosition(request.SpawnLocation));
-                        SystemAPI.SetComponent(pooledProjectile, request.Data);
-                        SystemAPI.SetComponentEnabled<ProjectileData>(pooledProjectile, true);
-
-                    }
-                    else
-                    {
-                        Entity newProjectile = state.EntityManager.Instantiate(config.ProjectilePrefab);
+                        Entity newProjectile = state.EntityManager.Instantiate(spawner.ValueRO.ProjectilePrefab);
                         SystemAPI.SetComponent(newProjectile, LocalTransform.FromPosition(request.SpawnLocation));
                         SystemAPI.SetComponent(newProjectile, request.Data);
                         SystemAPI.SetComponentEnabled<ProjectileData>(newProjectile, true);
+                    }
+                    else
+                    {
+                        int lastIndex = spawnPoolBuffers.Length - 1;
+                        Entity pooledProjectile = spawnPoolBuffers[lastIndex].ProjectileEntity; // 맨 끝에 있는 걸 꺼내고
+                        spawnPoolBuffers.RemoveAt(lastIndex); // 버퍼에서 지웁니다.
+                    
+                        SystemAPI.SetComponent(pooledProjectile, LocalTransform.FromPosition(request.SpawnLocation));
+                        SystemAPI.SetComponent(pooledProjectile, request.Data);
+                        SystemAPI.SetComponentEnabled<ProjectileData>(pooledProjectile, true);
                     }
                 }
             
                 // 처리 끝난 버퍼 비우기
                 spawnBuffer.Clear();
             }
-        }
-
-        public void OnDestroy(ref SystemState state)
-        {
-            if(ProjectilePool.IsCreated) ProjectilePool.Dispose();
         }
     }
 }

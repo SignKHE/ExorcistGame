@@ -92,9 +92,9 @@ namespace ExorcistGame.Character
                                 {
                                     // 여기서 공격
                                     UnityEngine.Debug.Log($"플레이어 공격");
-                                    DynamicBuffer<ProjectileSpawnBuffer> spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnBuffer>(playerEntity);
+                                    DynamicBuffer<ProjectileSpawnRequestBuffer> spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnRequestBuffer>(playerEntity);
 
-                                    spawnBuffer.Add(new ProjectileSpawnBuffer()
+                                    spawnBuffer.Add(new ProjectileSpawnRequestBuffer()
                                     {
                                         SpawnLocation = playerTransform.ValueRO.Position + new float3(0f, 1f, 0f),
                                         Data = new ProjectileData(damage:20f,direction:targetDirection,speed:10f,lifeTime:10f,playerEntity)
