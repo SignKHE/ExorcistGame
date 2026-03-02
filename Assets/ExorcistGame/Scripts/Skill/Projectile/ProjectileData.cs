@@ -44,7 +44,7 @@ namespace ExorcistGame.Skill
             Instigator = instigator;
         }
 
-        public static ProjectileData Empty = new ProjectileData
+        public static readonly ProjectileData Empty = new ProjectileData
         {
             Damage = 0,
             Direction = float3.zero,

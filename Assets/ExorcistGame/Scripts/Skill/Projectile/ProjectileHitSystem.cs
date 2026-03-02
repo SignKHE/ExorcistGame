@@ -80,7 +80,7 @@ namespace ExorcistGame.Skill
 
             bool isBProjectile = ProjectileLookup.HasComponent(entityB);
             bool isATarget = TargetLookup.HasComponent(entityA);
-            UnityEngine.Debug.Log("충돌잡 작동");
+            //UnityEngine.Debug.Log("충돌잡 작동");
             // A와 B가 각각 투사체와 타겟일때 충돌 판정
             if ((isAProjectile && isBTarget) || (isBProjectile && isATarget))
             {
@@ -91,25 +91,23 @@ namespace ExorcistGame.Skill
                 bool targetIsPlayer = PlayerLookup.HasComponent(targetEntity);
 
                 // 투사체와 타겟이 같은 편이 아닐때 충돌 판정
-                if (projectileIsPlayer != targetIsPlayer )
-                {
-                    UnityEngine.Debug.Log("충돌이다");
-                    // 투사체에 Hit버퍼 생성.
-                    int sortKey = projectileEntity.Index;
+                if (projectileIsPlayer == targetIsPlayer) return;
+                
+                //UnityEngine.Debug.Log("충돌이다");
+                // 투사체에 Hit버퍼 생성.
+                int sortKey = projectileEntity.Index;
 
-                    ECB.AddBuffer<HitBuffer>(sortKey, projectileEntity);
-                    ECB.AppendToBuffer(sortKey, projectileEntity, 
-                        new HitBuffer()
+                ECB.AddBuffer<HitBuffer>(sortKey, projectileEntity);
+                ECB.AppendToBuffer(sortKey, projectileEntity, 
+                    new HitBuffer()
+                    {
+                        Target = targetEntity,
+                        DamageData = new DamageBufferElement
                         {
-                            Target = targetEntity,
-                            DamageData = new DamageBufferElement
-                            {
-                                Value = ProjectileLookup[projectileEntity].Damage, 
-                                Instigator = ProjectileLookup[projectileEntity].Instigator
-                            }
-                        });
-                    
-                }
+                            Value = ProjectileLookup[projectileEntity].Damage, 
+                            Instigator = ProjectileLookup[projectileEntity].Instigator
+                        }
+                    });
             }
         }
     }
@@ -122,23 +120,22 @@ namespace ExorcistGame.Skill
     {
         public EntityCommandBuffer.ParallelWriter ECB;
 
-        public void Execute(Entity projectileEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<HitBuffer> hits, in ProjectileData data)
+        private void Execute(Entity projectileEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<HitBuffer> hits, in ProjectileData data)
         {
-            if (hits.Length > 0)
-            {
-                Entity targetEntity = hits[0].Target;
+            if (hits.Length <= 0) return;
+            
+            Entity targetEntity = hits[0].Target;
 
-                ECB.AddBuffer<DamageBufferElement>(sortKey, targetEntity);
-                ECB.AppendToBuffer(sortKey, targetEntity, hits[0].DamageData);
+            ECB.AddBuffer<DamageBufferElement>(sortKey, targetEntity);
+            ECB.AppendToBuffer(sortKey, targetEntity, hits[0].DamageData);
                 
-                ECB.SetComponent(sortKey, projectileEntity, LocalTransform.FromPosition(new float3(0, -100f, 0)));
-                ECB.SetComponent(sortKey,projectileEntity, ProjectileData.Empty);
-                ECB.SetComponentEnabled<ProjectileData>(sortKey, projectileEntity, false);
+            ECB.SetComponent(sortKey, projectileEntity, LocalTransform.FromPosition(new float3(0, -100f, 0)));
+            ECB.SetComponent(sortKey,projectileEntity, ProjectileData.Empty);
+            ECB.SetComponentEnabled<ProjectileData>(sortKey, projectileEntity, false);
 
-                ECB.AppendToBuffer(sortKey, data.Instigator , new ProjectileSpawnPoolBuffer { ProjectileEntity = projectileEntity });
+            ECB.AppendToBuffer(sortKey, data.Instigator , new ProjectileSpawnPoolBuffer { ProjectileEntity = projectileEntity });
                 
-                hits.Clear();
-            }
+            hits.Clear();
         }
     }
 }
