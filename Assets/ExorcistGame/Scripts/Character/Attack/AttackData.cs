@@ -11,5 +11,12 @@ namespace ExorcistGame.Character
         public float AttackTimer;
         public float ReloadTime;
         public float ReloadTimer;
+
+        public void Reset()
+        {
+            Target = Entity.Null;
+            AttackTimer = 0f;
+            ReloadTimer = 0f;
+        }
     }
 }

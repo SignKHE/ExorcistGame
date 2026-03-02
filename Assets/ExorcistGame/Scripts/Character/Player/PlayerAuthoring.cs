@@ -5,7 +5,7 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace ExorcistGame.Character
+namespace ExorcistGame.Character.Player
 {
     public class PlayerAuthoring : MonoBehaviour
     {
@@ -30,7 +30,7 @@ namespace ExorcistGame.Character
                     ReloadTime = 1f, 
                     ReloadTimer = 0f
                 });
-                AddComponent(entity, new StateData() {State = EState.Idle});
+                AddComponent(entity, new StateData() {IsInitialized = false});
                 AddComponent(entity, new ProjectileSpawner(GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic)));
                 AddBuffer<ProjectileSpawnRequestBuffer>(entity);
                 AddBuffer<ProjectileSpawnPoolBuffer>(entity);

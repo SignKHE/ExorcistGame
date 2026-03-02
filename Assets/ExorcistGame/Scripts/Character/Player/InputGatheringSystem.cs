@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ExorcistGame.Character
+namespace ExorcistGame.Character.Player
 {
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial class InputGatheringSystem : SystemBase
