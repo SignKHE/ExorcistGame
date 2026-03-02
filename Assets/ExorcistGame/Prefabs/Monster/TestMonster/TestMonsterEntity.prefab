@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1381359819746479461}
   - component: {fileID: 862533960415721291}
+  - component: {fileID: -7587161535235788417}
   m_Layer: 0
   m_Name: TestMonsterEntity
   m_TagString: Untagged
@@ -55,3 +56,16 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-7587161535235788417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703890109475972305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca70232a8004c8ca07e976afac060ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Character.Monster.MonsterAuthoring
+  projectilePrefab: {fileID: 5453051321186680474, guid: bbd67e2d5b5a2e64f8b9384898eb261d, type: 3}

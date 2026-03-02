@@ -1,5 +1,6 @@
 using System;
 using ExorcistGame.Character;
+using ExorcistGame.Character.Monster;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;

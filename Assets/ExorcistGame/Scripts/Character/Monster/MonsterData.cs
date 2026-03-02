@@ -1,7 +1,7 @@
 using System;
 using Unity.Entities;
 
-namespace ExorcistGame.Character
+namespace ExorcistGame.Character.Monster
 {
     public struct MonsterData : IComponentData
     {

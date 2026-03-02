@@ -1,5 +1,6 @@
 using System.Linq;
 using ExorcistGame.Character;
+using ExorcistGame.Character.Monster;
 using ExorcistGame.Damage;
 using ExorcistGame.VisualSync;
 using Unity.Burst;
@@ -74,10 +75,6 @@ namespace ExorcistGame.Spawn
                     randomOffset.y = 0;
                     float3 finalPos = spawnPosition + randomOffset;
                     ecb.AddComponent(newMonster, LocalTransform.FromPosition(finalPos));
-                    ecb.AddComponent(newMonster, new VisualSyncTag());
-                    ecb.AddComponent(newMonster, new MonsterData());
-                    ecb.AddComponent(newMonster, new CharacterTag());
-                    ecb.AddComponent(newMonster, new HPData(hp:100f));
                 }
                 ecb.DestroyEntity(entity);
             }

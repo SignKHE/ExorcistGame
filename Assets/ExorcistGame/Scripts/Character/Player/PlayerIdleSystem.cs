@@ -1,3 +1,4 @@
+using ExorcistGame.Character.Monster;
 using ExorcistGame.Character.State;
 using Unity.Burst;
 using Unity.Collections;
