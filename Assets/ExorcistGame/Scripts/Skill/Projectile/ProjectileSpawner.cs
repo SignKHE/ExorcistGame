@@ -14,7 +14,7 @@ namespace ExorcistGame.Skill
         /// </summary>
         public bool IsInitialized;
 
-        public int PoolSize;
+        public readonly int PoolSize;
 
         public ProjectileSpawner(Entity projectilePrefab)
         {
