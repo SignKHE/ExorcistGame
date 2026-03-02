@@ -8,16 +8,9 @@ namespace ExorcistGame.Damage
     [UpdateAfter(typeof(FixedStepSimulationSystemGroup))]
     public partial struct DamageSystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
-        {
-            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
-        }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
-
             foreach (var (hpData, damageBuffer, entity) in SystemAPI.Query<RefRW<HPData>, DynamicBuffer<DamageBufferElement>>()
                          .WithNone<DeadState>()
                          .WithEntityAccess())

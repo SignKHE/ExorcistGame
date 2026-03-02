@@ -77,7 +77,7 @@ namespace ExorcistGame.Spawn
                     ecb.AddComponent(newMonster, new VisualSyncTag());
                     ecb.AddComponent(newMonster, new MonsterData());
                     ecb.AddComponent(newMonster, new CharacterTag());
-                    ecb.AddComponent(newMonster, new HPData() { MaxHP = 100f, HP = 100f});
+                    ecb.AddComponent(newMonster, new HPData(hp:100f));
                 }
                 ecb.DestroyEntity(entity);
             }

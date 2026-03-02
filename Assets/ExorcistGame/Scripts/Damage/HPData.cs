@@ -12,5 +12,13 @@ namespace ExorcistGame.Damage
         /// 현재 체력
         /// </summary>
         public float HP;
+        public bool IsInitialized;
+
+        public HPData(float hp)
+        {
+            MaxHP = hp;
+            HP = MaxHP;
+            IsInitialized = false;
+        }
     }
 }
