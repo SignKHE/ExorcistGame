@@ -16,8 +16,8 @@ namespace ExorcistGame.Skill
     {
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<SimulationSingleton>();
+            state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
         }
 
         [BurstCompile]
@@ -25,42 +25,25 @@ namespace ExorcistGame.Skill
         {
             var simulation = SystemAPI.GetSingleton<SimulationSingleton>();
             
-            var hitRecordECB = new EntityCommandBuffer(Allocator.TempJob);
-            
-            var projectileLookup = SystemAPI.GetComponentLookup<ProjectileData>(true);
-            var targetLookup = SystemAPI.GetComponentLookup<HPData>(true);
-            var playerLookup = SystemAPI.GetComponentLookup<PlayerTag>(true);
-            
+            // 싱글톤에서 ParallelWriter ECB 가져오기
+            var ecbSingleton = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
+
             var job = new ProjectileTriggerJob
             {
-                ProjectileLookup = projectileLookup,
-                TargetLookup = targetLookup,
-                PlayerLookup = playerLookup,
-                ECB = hitRecordECB.AsParallelWriter()
+                ProjectileLookup = SystemAPI.GetComponentLookup<ProjectileData>(true),
+                TargetLookup = SystemAPI.GetComponentLookup<HPData>(true),
+                PlayerLookup = SystemAPI.GetComponentLookup<PlayerTag>(true),
+                ECB = ecb
             };
             
-            // 투사체 충돌 처리 실행
-            var hitJobHandle = job.Schedule(simulation, state.Dependency);
-            hitJobHandle.Complete();
-            // 투사체 충돌 처리가 완료된 다음 ECB 처리
-            hitRecordECB.Playback(state.EntityManager);
-            hitRecordECB.Dispose();
-
-            var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-            var hitResolveEcb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
-            
-            var hitResolveJob = new ProjectileHitJob
-            {
-                ECB = hitResolveEcb
-            };
-            
-            // 충돌한 투사체의 데미지 처리 실행
-            state.Dependency = hitResolveJob.ScheduleParallel(state.Dependency);
+            // .Complete() 없이 Dependency만 연결해 메인 스레드 멈춤 방지
+            state.Dependency = job.Schedule(simulation, state.Dependency);
         }
     }
-    
+
     /// <summary>
-    /// 투사체 충돌처리 구현
+    /// 투사체 충돌 처리 및 풀 반환을 한 번에 수행하는 Job
     /// </summary>
     [BurstCompile]
     public struct ProjectileTriggerJob : ITriggerEventsJob
@@ -80,62 +63,37 @@ namespace ExorcistGame.Skill
 
             bool isBProjectile = ProjectileLookup.HasComponent(entityB);
             bool isATarget = TargetLookup.HasComponent(entityA);
-            //UnityEngine.Debug.Log("충돌잡 작동");
-            // A와 B가 각각 투사체와 타겟일때 충돌 판정
+
             if ((isAProjectile && isBTarget) || (isBProjectile && isATarget))
             {
-                // 투사체 엔티티와 타겟 엔티티를 알기 쉽게 할당
                 var (projectileEntity, targetEntity) = isAProjectile ? (entityA, entityB) : (entityB, entityA);
                 
                 bool projectileIsPlayer = PlayerLookup.HasComponent(projectileEntity);
                 bool targetIsPlayer = PlayerLookup.HasComponent(targetEntity);
 
-                // 투사체와 타겟이 같은 편이 아닐때 충돌 판정
+                // 아군 체크
                 if (projectileIsPlayer == targetIsPlayer) return;
                 
-                //UnityEngine.Debug.Log("충돌이다");
-                // 투사체에 Hit버퍼 생성.
+                var projData = ProjectileLookup[projectileEntity];
                 int sortKey = projectileEntity.Index;
 
-                ECB.AddBuffer<HitBuffer>(sortKey, projectileEntity);
-                ECB.AppendToBuffer(sortKey, projectileEntity, 
-                    new HitBuffer()
-                    {
-                        Target = targetEntity,
-                        DamageData = new DamageBufferElement
-                        {
-                            Value = ProjectileLookup[projectileEntity].Damage, 
-                            Instigator = ProjectileLookup[projectileEntity].Instigator
-                        }
-                    });
+                ECB.AppendToBuffer(sortKey, targetEntity, new DamageBufferElement
+                {
+                    Value = projData.Damage, 
+                    Instigator = projData.Instigator
+                });
+
+                // 투사체 비활성화
+                ECB.AddComponent(sortKey, projectileEntity, LocalTransform.FromPosition(new float3(0, -100f, 0)));
+                ECB.SetComponentEnabled<ProjectileData>(sortKey, projectileEntity, false);
+                ECB.AddComponent(sortKey, projectileEntity, new Disabled());
+
+                // 투사체 반납
+                ECB.AppendToBuffer(sortKey, projData.Instigator, new ProjectileSpawnPoolBuffer 
+                { 
+                    ProjectileEntity = projectileEntity 
+                });
             }
-        }
-    }
-    
-    /// <summary>
-    /// Hit 버퍼를 가진 투사체 엔치치의 데미지 처리를 구현
-    /// </summary>
-    [BurstCompile]
-    public partial struct ProjectileHitJob : IJobEntity
-    {
-        public EntityCommandBuffer.ParallelWriter ECB;
-
-        private void Execute(Entity projectileEntity, [EntityIndexInQuery] int sortKey, ref DynamicBuffer<HitBuffer> hits, in ProjectileData data)
-        {
-            if (hits.Length <= 0) return;
-            
-            Entity targetEntity = hits[0].Target;
-
-            ECB.AddBuffer<DamageBufferElement>(sortKey, targetEntity);
-            ECB.AppendToBuffer(sortKey, targetEntity, hits[0].DamageData);
-                
-            ECB.SetComponent(sortKey, projectileEntity, LocalTransform.FromPosition(new float3(0, -100f, 0)));
-            ECB.SetComponent(sortKey,projectileEntity, ProjectileData.Empty);
-            ECB.SetComponentEnabled<ProjectileData>(sortKey, projectileEntity, false);
-
-            ECB.AppendToBuffer(sortKey, data.Instigator , new ProjectileSpawnPoolBuffer { ProjectileEntity = projectileEntity });
-                
-            hits.Clear();
         }
     }
 }

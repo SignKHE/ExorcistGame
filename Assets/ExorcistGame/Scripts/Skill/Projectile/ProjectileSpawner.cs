@@ -9,6 +9,8 @@ namespace ExorcistGame.Skill
         /// 투사체 프리팹
         /// </summary>
         public Entity ProjectilePrefab;
+
+        public ProjectileData ProjectileDataPreset;
         /// <summary>
         /// 스포너 초기화 상태값
         /// </summary>
@@ -16,11 +18,12 @@ namespace ExorcistGame.Skill
 
         public readonly int PoolSize;
 
-        public ProjectileSpawner(Entity projectilePrefab)
+        public ProjectileSpawner(Entity projectilePrefab,ProjectileData projectileDataPreset, int poolSize)
         {
             ProjectilePrefab = projectilePrefab;
+            ProjectileDataPreset = projectileDataPreset;
             IsInitialized = false;
-            PoolSize = 10;
+            PoolSize = poolSize;
         }
     }
 }

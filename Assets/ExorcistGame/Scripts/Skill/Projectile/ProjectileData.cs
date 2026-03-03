@@ -33,7 +33,7 @@ namespace ExorcistGame.Skill
         /// 투사체 생성 주체
         /// </summary>
         public Entity Instigator;
-        public ProjectileData(float damage, float3 direction, float speed, float lifeTime, Entity instigator, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
+        public ProjectileData(Entity instigator, float damage = 10f, float3 direction = default, float speed = 1f, float lifeTime = 1f, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
         {
             Damage = damage;
             Direction = direction;
@@ -44,16 +44,10 @@ namespace ExorcistGame.Skill
             Instigator = instigator;
         }
 
-        public static readonly ProjectileData Empty = new ProjectileData
+        public void SetInstigator(Entity instigator)
         {
-            Damage = 0,
-            Direction = float3.zero,
-            Speed = 0,
-            LifeTime = 0f,
-            LeftLife = 0f,
-            TriggerType = EProjectileTriggerType.SingleTarget,
-            Instigator = Entity.Null
-        };
+            Instigator = instigator;
+        }
     }
 
     public enum EProjectileTriggerType : byte
