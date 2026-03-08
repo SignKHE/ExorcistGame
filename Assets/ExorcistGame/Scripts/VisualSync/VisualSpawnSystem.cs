@@ -35,8 +35,7 @@ namespace ExorcistGame.VisualSync
             // VisualSyncTag는 있는데 LocalTransform 컴포넌트가 없는 엔티티 == 엔티티가 파괴된 상태
             // 디스폰 JOB에 추가
             Entities
-                .WithAll<VisualData>()
-                .WithNone<LocalTransform>()
+                .WithAll<VisualData, Disabled>()
                 .ForEach((Entity entity) =>
                 {
                     toDespawn.Add(entity);
@@ -81,7 +80,6 @@ namespace ExorcistGame.VisualSync
                 VisualData visualData = EntityManager.GetComponentData<VisualData>(entity);
                 CharacterPoolManager.Instance.ReturnCharacter(visualData.VisualObject, characterType);
                 
-                // Cleanup 제거 -> 엔티티 완전 소멸
                 EntityManager.RemoveComponent<VisualData>(entity);
             }
 

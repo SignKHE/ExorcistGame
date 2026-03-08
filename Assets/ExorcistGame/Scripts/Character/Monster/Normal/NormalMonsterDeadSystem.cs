@@ -1,3 +1,5 @@
+using ExorcistGame.Character.Spawn;
+using ExorcistGame.Character.State;
 using ExorcistGame.Damage;
 using Unity.Burst;
 using Unity.Collections;
@@ -17,11 +19,17 @@ namespace ExorcistGame.Character.Monster.Normal
         {
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            foreach (var (transform, entity)
-                     in SystemAPI.Query< RefRO<LocalTransform>>()
+            foreach (var (hpData, transform,spawnedData , entity)
+                     in SystemAPI.Query< RefRW<HPData>, RefRO<LocalTransform>, RefRO<SpawnedData>>()
                          .WithAll<MonsterData, DeadState>().WithEntityAccess())
             {
-                
+                hpData.ValueRW.Reset();
+                ecb.SetComponentEnabled<IdleState>(entity, false);
+                ecb.SetComponentEnabled<MoveState>(entity, false);
+                ecb.SetComponentEnabled<AttackState>(entity, false);
+                ecb.SetComponentEnabled<DeadState>(entity, false);
+                ecb.AddComponent(entity, new Disabled());
+                ecb.AppendToBuffer(spawnedData.ValueRO.SpawnPool, new SpawnPoolBuffer() {LoadedEntity = entity});
             }
             
             ecb.Playback(state.EntityManager);

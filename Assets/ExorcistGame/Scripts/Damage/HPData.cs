@@ -20,5 +20,10 @@ namespace ExorcistGame.Damage
             HP = MaxHP;
             IsInitialized = false;
         }
+
+        public void Reset()
+        {
+            HP = MaxHP;
+        }
     }
 }
