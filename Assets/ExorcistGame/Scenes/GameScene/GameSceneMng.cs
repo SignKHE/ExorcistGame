@@ -1,4 +1,4 @@
-using ExorcistGame.Spawn;
+using ExorcistGame.Character.Spawn;
 using ExorcistGame.UI;
 using ExorcistGame.UI.InGameView;
 using R3;

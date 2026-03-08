@@ -1,9 +1,9 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace ExorcistGame.Spawn
+namespace ExorcistGame.Character.Spawn
 {
-    public struct SpawnRequestData : IComponentData
+    public struct SpawnRequestData : IBufferElementData
     {
         /// <summary>
         /// 스폰할 몬스터의 갯수
