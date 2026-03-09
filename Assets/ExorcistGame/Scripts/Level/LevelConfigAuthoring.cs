@@ -20,8 +20,10 @@ namespace ExorcistGame.Level
                     MaxExperience = authoring.maxExperience
                 });
                 AddComponent(entity, new LevelData() {Experience = 0, Level = 0});
+                AddComponent(entity, new PlayerTag());
                 AddBuffer<ExpGainBuffer>(entity);
                 AddBuffer<LevelGainBuffer>(entity);
+                AddBuffer<LevelUpEventBuffer>(entity);
             }
         }
     }

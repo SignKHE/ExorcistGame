@@ -1,11 +1,14 @@
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 
 namespace ExorcistGame.Level
 {
     [UpdateBefore(typeof(LevelSystem))]
+    [BurstCompile]
     public partial struct ExpSystem : ISystem
     {
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             // 레벨 설정 싱글톤 가져오기. (없으면 종료)
