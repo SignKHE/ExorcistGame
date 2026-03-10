@@ -31,7 +31,7 @@ namespace ExorcistGame.Character.Player
                     ReloadTimer = 0f
                 });
                 AddComponent(entity, new StateData() {IsInitialized = false});
-                AddComponent(entity, new ProjectileSpawner(GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), new ProjectileData(instigator:entity), poolSize:3));
+                AddComponent(entity, new ProjectileSpawner(GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), new ProjectileData(instigator:entity, damage:50f,speed:2f), poolSize:3));
             }
         }
     }

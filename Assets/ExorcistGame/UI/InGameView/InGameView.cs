@@ -1,6 +1,8 @@
+using ExorcistGame.Level;
 using R3;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ExorcistGame.UI.InGameView
 {
@@ -8,6 +10,8 @@ namespace ExorcistGame.UI.InGameView
     {
         [SerializeField]
         private TextMeshProUGUI timerText;
+
+        [SerializeField] private Image expBarImage;
         protected override void Initialize()
         {
             (viewModel as InGameViewModel)?.LeftTime
@@ -18,6 +22,15 @@ namespace ExorcistGame.UI.InGameView
                     int minutes = leftTime / 60;
                     int seconds = leftTime % 60;
                     timerText.text = $"{minutes:D2}:{seconds:D2}";
+                })
+                .AddTo(disposables);
+
+            (viewModel as InGameViewModel)?.ExperienceValue
+                .DistinctUntilChanged()
+                .Subscribe(experience =>
+                {
+                    Debug.Log($"경험치 획득 : {experience}");
+                    expBarImage.fillAmount = (float)experience / (float)(viewModel as InGameViewModel).MaxExperience.CurrentValue;
                 })
                 .AddTo(disposables);
         }

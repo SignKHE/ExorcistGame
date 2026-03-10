@@ -24,7 +24,8 @@ namespace ExorcistGame.Level
             var world = World.DefaultGameObjectInjectionWorld;
             if (world == null) return;
             _skillPointModel = world.GetExistingSystemManaged<LevelUpEventSystem>();
-                
+            
+            _levelUpEvent = world.GetExistingSystemManaged<LevelUpEventSystem>();
             _levelUpEvent.LevelUpEvent.AddListener(LevelUp);
         }
 

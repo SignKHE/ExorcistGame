@@ -1,6 +1,7 @@
 using ExorcistGame.Character.Spawn;
 using ExorcistGame.Character.State;
 using ExorcistGame.Damage;
+using ExorcistGame.Level;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -17,6 +18,7 @@ namespace ExorcistGame.Character.Monster.Normal
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+            if (!SystemAPI.TryGetSingletonEntity<ExpGainBuffer>(out var expGainEntity)) return;
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
             foreach (var (hpData, transform,spawnedData , entity)
@@ -30,6 +32,8 @@ namespace ExorcistGame.Character.Monster.Normal
                 ecb.SetComponentEnabled<DeadState>(entity, false);
                 ecb.AddComponent(entity, new Disabled());
                 ecb.AppendToBuffer(spawnedData.ValueRO.SpawnPool, new SpawnPoolBuffer() {LoadedEntity = entity});
+                
+                ecb.AppendToBuffer(expGainEntity, new  ExpGainBuffer() {Gain = 10});
             }
             
             ecb.Playback(state.EntityManager);

@@ -4,7 +4,7 @@ using Unity.Entities;
 namespace ExorcistGame.Damage
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(LateSimulationSystemGroup))]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateAfter(typeof(FixedStepSimulationSystemGroup))]
     public partial struct DamageSystem : ISystem
     {

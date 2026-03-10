@@ -6,5 +6,7 @@ namespace ExorcistGame.Level
     {
         ReactiveProperty<uint> Level { get; }
         ReactiveProperty<uint> Experience { get; }
+        ReactiveProperty<uint> MaxLevel { get; }
+        ReactiveProperty<uint> MaxExperience { get; }
     }
 }

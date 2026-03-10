@@ -619,8 +619,8 @@ GameObject:
   - component: {fileID: 4486265672209628272}
   - component: {fileID: 5787257777727929601}
   - component: {fileID: 3022400548534698942}
-  - component: {fileID: 1292694901298937230}
   - component: {fileID: 6882938082298740746}
+  - component: {fileID: -4095689057328031073}
   m_Layer: 5
   m_Name: LevelUpView
   m_TagString: Untagged
@@ -670,20 +670,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &1292694901298937230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2746284520762386618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b679da9e9314415abc6734c562ef63dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.UI.InGameView.InGameView
-  viewCanvasGroup: {fileID: 3022400548534698942}
-  timerText: {fileID: 0}
 --- !u!114 &6882938082298740746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,6 +700,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-4095689057328031073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2746284520762386618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae9df750d1bedd4ebc37fc41f4088d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.UI.LevelUpView.LevelUpView
+  viewCanvasGroup: {fileID: 3022400548534698942}
 --- !u!1 &2976084687695374001
 GameObject:
   m_ObjectHideFlags: 0

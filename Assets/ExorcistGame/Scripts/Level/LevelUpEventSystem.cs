@@ -7,6 +7,11 @@ namespace ExorcistGame.Level
 {
     public partial class LevelUpEventSystem : SystemBase, ISkillPointModel, ILevelUpEvent
     {
+        protected override void OnCreate()
+        {
+            LevelUpEvent = new UnityEvent();
+        }
+
         protected override void OnUpdate()
         {
             if(!SystemAPI.TryGetSingletonBuffer<LevelUpEventBuffer>(out var levelUpEventBuffer) || levelUpEventBuffer.IsEmpty) return;

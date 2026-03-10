@@ -10,13 +10,10 @@ namespace ExorcistGame.Level
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            // 레벨 설정 싱글톤 가져오기. (없으면 종료)
-            if(!SystemAPI.TryGetSingleton<LevelConfig>(out var config)) return;
-            
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             
-            foreach (var (data, entity) 
-                     in SystemAPI.Query<RefRW<LevelData>>()
+            foreach (var (data,config, entity) 
+                     in SystemAPI.Query<RefRW<LevelData>, RefRO<LevelConfig>>()
                          .WithAll<LevelGainBuffer, LevelUpEventBuffer>()
                          .WithEntityAccess())
             {
@@ -24,7 +21,7 @@ namespace ExorcistGame.Level
                 if (levelGainBuffer.IsEmpty) continue;
 
                 // 현재 레벨이 최대 레벨보다 작을때만 레벨업 처리
-                if (data.ValueRO.Level < config.MaxLevel)
+                if (data.ValueRO.Level < config.ValueRO.MaxLevel)
                 {
                     uint level = 0;
                     foreach (var levelGain in levelGainBuffer)
@@ -33,7 +30,7 @@ namespace ExorcistGame.Level
                     }
 
                     // 얻는 레벨이 최대 레벨을 초과시킬 수 있다면 얻는 레벨량 조정
-                    level = config.MaxLevel > data.ValueRO.Level + level ? config.MaxLevel - data.ValueRO.Level : level;
+                    level = config.ValueRO.MaxLevel > data.ValueRO.Level + level ? config.ValueRO.MaxLevel - data.ValueRO.Level : level;
 
                     data.ValueRW.Level += level;
                     ecb.AppendToBuffer(entity, new LevelUpEventBuffer() {SkillPoint = level});

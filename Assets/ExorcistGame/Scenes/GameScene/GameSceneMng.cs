@@ -1,7 +1,9 @@
 using ExorcistGame.Character.Spawn;
+using ExorcistGame.Level;
 using ExorcistGame.UI;
 using ExorcistGame.UI.InGameView;
 using R3;
+using Unity.Entities;
 using UnityEngine;
 
 namespace ExorcistGame
@@ -10,16 +12,23 @@ namespace ExorcistGame
     {
         [SerializeField]
         private SpawnManager spawnManager;
+
+        [SerializeField] private LevelMng levelManager;
         [SerializeField]
         private GameObject inGameViewPrefab;
 
         private GameTimer _gameTimer = new GameTimer(600.0f);
+        private LevelModelSystem _levelModelSystem;
 
         private InGameViewModel _viewModel;
         
         private async void Start()
         {
             Debug.Log("GameSceneMng Start");
+            
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null) return;
+            _levelModelSystem = world.GetExistingSystemManaged<LevelModelSystem>();
 
             CreateInGameUI();
 
@@ -31,7 +40,7 @@ namespace ExorcistGame
 
         private void CreateInGameUI()
         {
-            _viewModel = new InGameViewModel(_gameTimer);
+            _viewModel = new InGameViewModel(_gameTimer, _levelModelSystem);
             UIManager.Instance.CreateUI(inGameViewPrefab,_viewModel, UIManager.EUIType.Main);
         }
 

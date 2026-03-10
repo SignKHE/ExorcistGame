@@ -11,13 +11,8 @@ namespace ExorcistGame.Level
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            // 레벨 설정 싱글톤 가져오기. (없으면 종료)
-            if(!SystemAPI.TryGetSingleton<LevelConfig>(out var config)) return;
-            
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
-            
-            foreach (var (data, entity) 
-                     in SystemAPI.Query<RefRW<LevelData>>()
+            foreach (var (data,config, entity) 
+                     in SystemAPI.Query<RefRW<LevelData>,RefRO<LevelConfig>>()
                          .WithAll<ExpGainBuffer, LevelGainBuffer>()
                          .WithEntityAccess())
             {
@@ -31,19 +26,16 @@ namespace ExorcistGame.Level
                 }
                 expGainBuffer.Clear();
                 
-                uint level = exp / config.MaxExperience;
-                exp %= config.MaxExperience;
+                uint maxExp = config.ValueRO.MaxExperience == 0 ? 1 : config.ValueRO.MaxExperience;
+                uint level = exp / maxExp;
+                exp %= maxExp;
                 data.ValueRW.Experience = exp;
 
                 if (level > 0)
                 {
-                    ecb.AppendToBuffer(entity, new LevelGainBuffer() {Gain = level});
+                    SystemAPI.GetBuffer<LevelGainBuffer>(entity).Add(new LevelGainBuffer() { Gain = level });
                 }
             }
-            
-            
-            ecb.Playback(state.EntityManager);
-            ecb.Dispose();
         }
     }
 }
