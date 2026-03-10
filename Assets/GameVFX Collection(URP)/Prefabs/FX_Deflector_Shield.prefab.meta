@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: adc8b05849acbcb4db958419bfc77438
+timeCreated: 1550581959
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/Prefabs/FX_Deflector_Shield.prefab
+  uploadId: 845656

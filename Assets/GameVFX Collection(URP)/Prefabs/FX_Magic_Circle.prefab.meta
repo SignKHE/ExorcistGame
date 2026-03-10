@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8f54aff5a16fd784fad3deccb26b3e2a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/Prefabs/FX_Magic_Circle.prefab
+  uploadId: 845656

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d66cddaef8bc3d44eabaa790be9d58c6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/Prefabs/FX_Thunder.prefab
+  uploadId: 845656

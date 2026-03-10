@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 58b1de36f94bcc447a9240f48b2d9ff9
+timeCreated: 18446744011573954816
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: fx_textures_icon_materials.unity3d
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/FX_DarkShock/Textures/Materials/CFXM2_GhostStretch
+    Add.mat
+  uploadId: 845656

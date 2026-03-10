@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 72112c535f7dccc408eed5d04980f20a
+timeCreated: 1513319284
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: fx_textures_ring_materials.unity3d
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/FX_Starfall/Textures/Materials/ring02_00_2.mat
+  uploadId: 845656

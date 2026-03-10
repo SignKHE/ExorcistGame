@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 51c7af267a5ea8841bf32461e3785478
+timeCreated: 1561431335
+licenseType: Store
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/FX_Dragonfire/Shader/ParticleAdd_UV.shader
+  uploadId: 845656

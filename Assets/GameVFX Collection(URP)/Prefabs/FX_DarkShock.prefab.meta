@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 735254b888e75fe449c153ebb6ed47c8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/Prefabs/FX_DarkShock.prefab
+  uploadId: 845656

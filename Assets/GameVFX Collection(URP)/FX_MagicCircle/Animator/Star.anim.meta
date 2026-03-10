@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 63af0b7b76baa3d4db3698fc8d5f8240
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/FX_MagicCircle/Animator/Star.anim
+  uploadId: 845656

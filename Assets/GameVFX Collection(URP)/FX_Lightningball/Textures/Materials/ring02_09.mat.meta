@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5164fb1f376abfc4480bdd91029c58e3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: fx_textures_ring_materials.unity3d
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293042
+  packageName: RPG Game VFX Collection(URP)
+  packageVersion: 1.04
+  assetPath: Assets/GameVFX Collection(URP)/FX_Lightningball/Textures/Materials/ring02_09.mat
+  uploadId: 845656
