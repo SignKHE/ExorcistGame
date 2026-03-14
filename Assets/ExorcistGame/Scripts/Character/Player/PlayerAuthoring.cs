@@ -1,4 +1,5 @@
 using ExorcistGame.Character.State;
+using ExorcistGame.Seeker;
 using ExorcistGame.Skill;
 using ExorcistGame.VisualSync;
 using UnityEngine;
@@ -23,7 +24,6 @@ namespace ExorcistGame.Character.Player
                 AddComponent(entity, new VisualSyncTag());
                 AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = authoring.speed});
                 AddComponent(entity, new AttackData() {
-                    DetectionRange = 50f, 
                     AttackRange = 20f, 
                     AttackTime = 0.2f, 
                     AttackTimer = 0f, 
@@ -38,6 +38,11 @@ namespace ExorcistGame.Character.Player
                     projectileSpeed: 8f
                     )
                 );
+                AddComponent(entity, new SeekerData()
+                {
+                    Range = 10f, 
+                    TargetType = ETargetType.Monster
+                });
             }
         }
     }

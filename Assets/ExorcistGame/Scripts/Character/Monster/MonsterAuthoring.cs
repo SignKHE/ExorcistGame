@@ -1,5 +1,6 @@
 using ExorcistGame.Character.State;
 using ExorcistGame.Damage;
+using ExorcistGame.Seeker;
 using ExorcistGame.Skill;
 using ExorcistGame.VisualSync;
 using Unity.Entities;
@@ -24,7 +25,6 @@ namespace ExorcistGame.Character.Monster
                 
                 AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = 0f});
                 AddComponent(entity, new AttackData() {
-                    DetectionRange = 30f, 
                     AttackRange = 10f, 
                     AttackTime = 1f, 
                     AttackTimer = 0f, 
@@ -32,7 +32,16 @@ namespace ExorcistGame.Character.Monster
                     ReloadTimer = 0f
                 });
                 AddComponent(entity, new StateData() {IsInitialized = false});
-                AddComponent(entity, new ProjectileSpawner(GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), new ProjectileData(instigator:entity), poolSize:3));
+                AddComponent(entity, new ProjectileSpawner(
+                    GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), 
+                    new ProjectileData(instigator:entity), 
+                    poolSize:3
+                    ));
+                AddComponent(entity, new SeekerData()
+                {
+                    Range = 30f,
+                    TargetType = ETargetType.Player
+                });
             }
         }
     }

@@ -20,8 +20,6 @@ namespace ExorcistGame.Character.Player
                      in SystemAPI.Query<RefRW<AttackData>, RefRO<MovementData>, RefRW<LocalTransform>>()
                          .WithAll<PlayerTag, AttackState>().WithEntityAccess())
             {
-                Entity closestTarget = Entity.Null;
-                float minDistance = attackData.ValueRO.DetectionRange;
                 float3 playerPos = transform.ValueRO.Position;
                 float3 movement = movementData.ValueRO.Direction;
                 float distance = 0f;
