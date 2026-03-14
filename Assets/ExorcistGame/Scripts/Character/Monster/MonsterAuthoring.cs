@@ -23,9 +23,9 @@ namespace ExorcistGame.Character.Monster
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new HPData(hp:100f));
                 
-                AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = 0f});
+                AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = 1f});
                 AddComponent(entity, new AttackData() {
-                    AttackRange = 10f, 
+                    AttackRange = 5f, 
                     AttackTime = 1f, 
                     AttackTimer = 0f, 
                     ReloadTime = 1f, 

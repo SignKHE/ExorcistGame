@@ -24,10 +24,10 @@ namespace ExorcistGame.Character.Player
                 AddComponent(entity, new VisualSyncTag());
                 AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = authoring.speed});
                 AddComponent(entity, new AttackData() {
-                    AttackRange = 20f, 
-                    AttackTime = 0.2f, 
+                    AttackRange = 10f, 
+                    AttackTime = 0.1f, 
                     AttackTimer = 0f, 
-                    ReloadTime = 0.2f, 
+                    ReloadTime = 0.1f, 
                     ReloadTimer = 0f
                 });
                 AddComponent(entity, new StateData() {IsInitialized = false});
@@ -35,7 +35,7 @@ namespace ExorcistGame.Character.Player
                     GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), 
                     new ProjectileData(instigator:entity, damage:50f), 
                     poolSize:3,
-                    projectileSpeed: 8f
+                    projectileSpeed: 16f
                     )
                 );
                 AddComponent(entity, new SeekerData()

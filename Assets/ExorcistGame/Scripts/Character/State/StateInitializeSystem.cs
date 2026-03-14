@@ -10,7 +10,7 @@ namespace ExorcistGame.Character.State
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             
             foreach (var (stateData, entity) 
-                     in SystemAPI.Query<RefRO<StateData>>().WithEntityAccess())
+                     in SystemAPI.Query<RefRW<StateData>>().WithEntityAccess())
             {
                 if (!stateData.ValueRO.IsInitialized)
                 {
@@ -20,6 +20,7 @@ namespace ExorcistGame.Character.State
                     ecb.SetComponentEnabled<MoveState>(entity, false);
                     ecb.AddComponent(entity, new AttackState());
                     ecb.SetComponentEnabled<AttackState>(entity, false);
+                    stateData.ValueRW.IsInitialized = true;
                 }
             }
             

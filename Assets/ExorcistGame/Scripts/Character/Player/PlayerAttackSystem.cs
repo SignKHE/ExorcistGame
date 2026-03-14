@@ -15,15 +15,16 @@ namespace ExorcistGame.Character.Player
         public void OnUpdate(ref SystemState state)
         {
             var ecb = new EntityCommandBuffer(Allocator.Temp);
+            var transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true);
+            float deltaTime = SystemAPI.Time.DeltaTime;
 
             foreach (var (attackData, movementData, transform, entity)
-                     in SystemAPI.Query<RefRW<AttackData>, RefRO<MovementData>, RefRW<LocalTransform>>()
+                     in SystemAPI.Query<RefRW<AttackData>, RefRW<MovementData>, RefRW<LocalTransform>>()
                          .WithAll<PlayerTag, AttackState>().WithEntityAccess())
             {
                 float3 playerPos = transform.ValueRO.Position;
                 float3 movement = movementData.ValueRO.Direction;
-                float distance = 0f;
-                float deltaTime = SystemAPI.Time.DeltaTime;
+                float distanceSq = 0f;
                 
                 // 만약 움직임이 있다면 Move 상태로 변경
                 if (math.lengthsq(movement) > float.Epsilon)
@@ -35,6 +36,12 @@ namespace ExorcistGame.Character.Player
                     
                     continue;
                 }
+                
+                // 타겟이 존재하는지 확인
+                if (!transformLookup.TryGetComponent(attackData.ValueRO.Target, out LocalTransform targetTransform))
+                {
+                    attackData.ValueRW.Target = Entity.Null;
+                }
 
                 // 타겟이 없다면 Idle로 변경
                 if (attackData.ValueRO.Target == Entity.Null)
@@ -43,17 +50,18 @@ namespace ExorcistGame.Character.Player
                     // 상태 변경 예약
                     ecb.SetComponentEnabled<AttackState>(entity, false);
                     ecb.SetComponentEnabled<IdleState>(entity, true);
+                    continue;
                 }
                 
-                float3 targetPos = SystemAPI.GetComponent<LocalTransform>(attackData.ValueRO.Target).Position;
-                targetPos.y = 0f;
-                playerPos.y = 0f;
+                
+                
+                float3 targetPos = targetTransform.Position;
                 float3 targetDirection = math.normalizesafe(targetPos - playerPos);
-                transform.ValueRW.Rotation = quaternion.LookRotationSafe(targetDirection, math.up());
+                movementData.ValueRW.Direction = targetDirection * 0.00001f;
                         
-                distance = math.distance(playerPos, targetPos);
+                distanceSq = math.distancesq(playerPos, targetPos);
 
-                if (distance < attackData.ValueRO.AttackRange)
+                if (distanceSq < attackData.ValueRO.AttackRange * attackData.ValueRO.AttackRange)
                 {
                     if (attackData.ValueRO.ReloadTimer < attackData.ValueRO.ReloadTime)
                     {

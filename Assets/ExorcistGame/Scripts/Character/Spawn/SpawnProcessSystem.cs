@@ -1,4 +1,5 @@
 using ExorcistGame.Character.Monster;
+using ExorcistGame.Character.State;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -86,6 +87,7 @@ namespace ExorcistGame.Character.Spawn
                         randomOffset.y = 0;
                         float3 finalPos = spawnPosition + randomOffset;
                         ecb.AddComponent(newMonster, LocalTransform.FromPosition(finalPos));
+                        ecb.SetComponent(newMonster, new StateData() {IsInitialized = false});
                     }
                 }
                 requestDataBuffer.Clear();

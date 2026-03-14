@@ -15,7 +15,7 @@ namespace ExorcistGame.Character
 
             foreach (var (transform, movementData) 
                      in SystemAPI.Query<RefRW<LocalTransform>, RefRO<MovementData>>()
-                .WithAll<PlayerTag, CharacterTag>())
+                .WithAll<CharacterTag>())
             {
                 //movement 값이 유의미할 때만
                 if (math.lengthsq(movementData.ValueRO.Direction) > float.Epsilon)
