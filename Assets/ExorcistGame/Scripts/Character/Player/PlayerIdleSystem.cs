@@ -23,7 +23,7 @@ namespace ExorcistGame.Character.Player
                 Entity closestTarget = Entity.Null;
                 float minDistance = attackData.ValueRO.DetectionRange;
                 float3 playerPos = transform.ValueRO.Position;
-                float2 movement = movementData.ValueRO.MoveDirection;
+                float3 movement = movementData.ValueRO.Direction;
                 float distance = 0f;
                 
                 // 만약 움직임이 있다면 Move 상태로 변경

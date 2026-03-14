@@ -6,6 +6,6 @@ namespace ExorcistGame.Skill
     public struct ProjectileSpawnRequestBuffer : IBufferElementData
     {
         public float3 SpawnLocation;
-        public ProjectileData Data;
+        public float3 Direction;
     }
 }

@@ -12,11 +12,12 @@ namespace ExorcistGame.Skill
         {
             float deltaTime = SystemAPI.Time.DeltaTime;
 
-            foreach (var (data, transform, entity) 
-                     in SystemAPI.Query<RefRO<ProjectileData>, RefRW<LocalTransform>>().WithNone<Disabled>().WithEntityAccess() )
+            foreach (var (movementData, transform, entity) 
+                     in SystemAPI.Query<RefRO<MovementData>, RefRW<LocalTransform>>()
+                         .WithAll<ProjectileData>().WithEntityAccess() )
             {
-                float3 velocity = data.ValueRO.Direction * data.ValueRO.Speed * deltaTime;
-                transform.ValueRW.Rotation = quaternion.LookRotationSafe(data.ValueRO.Direction, math.up());
+                float3 velocity = movementData.ValueRO.Direction * movementData.ValueRO.Speed * deltaTime;
+                transform.ValueRW.Rotation = quaternion.LookRotationSafe(movementData.ValueRO.Direction, math.up());
                 transform.ValueRW.Position += velocity;
             }
         }

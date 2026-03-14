@@ -15,7 +15,7 @@ namespace ExorcistGame.Skill
 
             // 2. 메인 스레드에서 쿼리를 순회합니다. (엔티티 ID가 필요하므로 WithEntityAccess 사용)
             foreach (var (data,transform, entity) 
-                     in SystemAPI.Query<RefRW<ProjectileData>,RefRW<LocalTransform>>().WithNone<Disabled>().WithEntityAccess())
+                     in SystemAPI.Query<RefRW<ProjectileData>,RefRW<LocalTransform>>().WithEntityAccess())
             {
                 data.ValueRW.LeftLife -= deltaTime;
                 if (data.ValueRO.LeftLife <= 0)

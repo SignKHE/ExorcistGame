@@ -23,7 +23,7 @@ namespace ExorcistGame.Character.Player
                 Entity closestTarget = Entity.Null;
                 float minDistance = attackData.ValueRO.DetectionRange;
                 float3 playerPos = transform.ValueRO.Position;
-                float2 movement = movementData.ValueRO.MoveDirection;
+                float3 movement = movementData.ValueRO.Direction;
                 float distance = 0f;
                 float deltaTime = SystemAPI.Time.DeltaTime;
                 
@@ -72,7 +72,7 @@ namespace ExorcistGame.Character.Player
                             spawnBuffer.Add(new ProjectileSpawnRequestBuffer()
                             { 
                                 SpawnLocation = transform.ValueRO.Position + new float3(0f, 1f, 0f),
-                                Data = new ProjectileData(damage:20f,direction:targetDirection,speed:10f,lifeTime:10f,instigator:entity)
+                                Direction = targetDirection
                             });
                         }
                         attackData.ValueRW.AttackTimer += deltaTime;

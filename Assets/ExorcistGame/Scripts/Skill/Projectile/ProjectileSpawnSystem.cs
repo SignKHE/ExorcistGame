@@ -15,7 +15,7 @@ namespace ExorcistGame.Skill
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             
             foreach (var (spawner, spawnBuffer, spawnPoolBuffers, spawnerEntity) 
-                     in SystemAPI.Query<RefRW<ProjectileSpawner>, DynamicBuffer<ProjectileSpawnRequestBuffer>, DynamicBuffer<ProjectileSpawnPoolBuffer>>().WithEntityAccess())
+                     in SystemAPI.Query<RefRO<ProjectileSpawner>, DynamicBuffer<ProjectileSpawnRequestBuffer>, DynamicBuffer<ProjectileSpawnPoolBuffer>>().WithEntityAccess())
             {
                 if (!spawner.ValueRO.IsInitialized) continue;
                 if (spawnBuffer.IsEmpty) continue;
@@ -26,7 +26,8 @@ namespace ExorcistGame.Skill
                     {
                         Entity newProjectile = ecb.Instantiate(spawner.ValueRO.ProjectilePrefab);
                         ecb.AddComponent(newProjectile, LocalTransform.FromPosition(request.SpawnLocation));
-                        ecb.AddComponent(newProjectile, request.Data);
+                        ecb.AddComponent(newProjectile, spawner.ValueRO.ProjectileDataPreset);
+                        ecb.AddComponent(newProjectile, new MovementData() {Direction = request.Direction, Speed = spawner.ValueRO.ProjectileSpeed});
                         ecb.SetComponentEnabled<ProjectileData>(newProjectile, true);
                     }
                     else
@@ -36,7 +37,8 @@ namespace ExorcistGame.Skill
                         spawnPoolBuffers.RemoveAt(lastIndex); // 버퍼에서 지웁니다.
                     
                         ecb.AddComponent(pooledProjectile, LocalTransform.FromPosition(request.SpawnLocation));
-                        ecb.AddComponent(pooledProjectile, request.Data);
+                        ecb.AddComponent(pooledProjectile, spawner.ValueRO.ProjectileDataPreset);
+                        ecb.AddComponent(pooledProjectile, new MovementData() {Direction = request.Direction, Speed = spawner.ValueRO.ProjectileSpeed});
                         ecb.SetComponentEnabled<ProjectileData>(pooledProjectile, true);
                         ecb.RemoveComponent<Disabled>(pooledProjectile);
                     }

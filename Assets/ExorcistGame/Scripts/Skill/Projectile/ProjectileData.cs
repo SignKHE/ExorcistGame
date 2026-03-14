@@ -10,14 +10,6 @@ namespace ExorcistGame.Skill
         /// </summary>
         public float Damage;
         /// <summary>
-        /// 방향
-        /// </summary>
-        public float3 Direction;
-        /// <summary>
-        /// 속도
-        /// </summary>
-        public float Speed;
-        /// <summary>
         /// 수명
         /// </summary>
         public float LifeTime;
@@ -33,11 +25,9 @@ namespace ExorcistGame.Skill
         /// 투사체 생성 주체
         /// </summary>
         public Entity Instigator;
-        public ProjectileData(Entity instigator, float damage = 10f, float3 direction = default, float speed = 1f, float lifeTime = 1f, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
+        public ProjectileData(Entity instigator, float damage = 10f, float lifeTime = 1f, EProjectileTriggerType triggerType = EProjectileTriggerType.SingleTarget)
         {
             Damage = damage;
-            Direction = direction;
-            Speed = speed;
             LifeTime = lifeTime;
             LeftLife = lifeTime;
             TriggerType = triggerType;

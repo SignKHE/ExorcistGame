@@ -25,9 +25,9 @@ namespace ExorcistGame.Character.Player
             Vector2 moveDirection = _playerActions.Character.Move.ReadValue<Vector2>();
             float2 moveInput = new float2(moveDirection.x, moveDirection.y);
 
-            foreach (var inputData in SystemAPI.Query<RefRW<MovementData>>().WithAll<PlayerTag>())
+            foreach (var inputData in SystemAPI.Query<RefRW<MovementData>>().WithAll<PlayerTag, CharacterTag>())
             {
-                inputData.ValueRW.MoveDirection =  moveInput;
+                inputData.ValueRW.Direction = new float3(moveInput.x, 0f, moveInput.y);
             }
         }
     }

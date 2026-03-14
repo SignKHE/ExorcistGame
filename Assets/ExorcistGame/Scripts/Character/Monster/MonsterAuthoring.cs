@@ -22,7 +22,7 @@ namespace ExorcistGame.Character.Monster
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new HPData(hp:100f));
                 
-                AddComponent(entity, new MovementData() {MoveDirection = float2.zero});
+                AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = 0f});
                 AddComponent(entity, new AttackData() {
                     DetectionRange = 30f, 
                     AttackRange = 10f, 

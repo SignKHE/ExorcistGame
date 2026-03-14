@@ -1,11 +1,12 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace ExorcistGame.Character
+namespace ExorcistGame
 {
     public struct MovementData : IComponentData
     {
-        public float2 MoveDirection;
+        public float3 Direction;
+        public float Speed;
     }
 }
 

@@ -32,6 +32,7 @@ namespace ExorcistGame.Skill
                 {
                     ecb.AddComponent(instances[i],LocalTransform.FromPosition(new float3(0f,-100,0f)));
                     ecb.AddComponent(instances[i], spawner.ValueRO.ProjectileDataPreset);
+                    ecb.AddComponent(instances[i], new MovementData() {Direction = float3.zero, Speed = spawner.ValueRO.ProjectileSpeed});
                     ecb.SetComponentEnabled<ProjectileData>(instances[i], false);
                     if (isPlayer) ecb.AddComponent(instances[i], new PlayerTag());
                     ecb.AppendToBuffer(entity, new ProjectileSpawnPoolBuffer { ProjectileEntity = instances[i] });

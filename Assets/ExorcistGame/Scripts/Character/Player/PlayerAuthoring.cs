@@ -21,17 +21,23 @@ namespace ExorcistGame.Character.Player
                 AddComponent(entity, new PlayerTag());
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new VisualSyncTag());
-                AddComponent(entity, new MovementData() {MoveDirection = float2.zero});
+                AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = authoring.speed});
                 AddComponent(entity, new AttackData() {
                     DetectionRange = 50f, 
                     AttackRange = 20f, 
-                    AttackTime = 1f, 
+                    AttackTime = 0.2f, 
                     AttackTimer = 0f, 
-                    ReloadTime = 1f, 
+                    ReloadTime = 0.2f, 
                     ReloadTimer = 0f
                 });
                 AddComponent(entity, new StateData() {IsInitialized = false});
-                AddComponent(entity, new ProjectileSpawner(GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), new ProjectileData(instigator:entity, damage:50f,speed:2f), poolSize:3));
+                AddComponent(entity, new ProjectileSpawner(
+                    GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), 
+                    new ProjectileData(instigator:entity, damage:50f), 
+                    poolSize:3,
+                    projectileSpeed: 8f
+                    )
+                );
             }
         }
     }
