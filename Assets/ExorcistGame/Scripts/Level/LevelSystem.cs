@@ -30,10 +30,10 @@ namespace ExorcistGame.Level
                     }
 
                     // 얻는 레벨이 최대 레벨을 초과시킬 수 있다면 얻는 레벨량 조정
-                    level = config.ValueRO.MaxLevel > data.ValueRO.Level + level ? config.ValueRO.MaxLevel - data.ValueRO.Level : level;
+                    level = config.ValueRO.MaxLevel < data.ValueRO.Level + level ? config.ValueRO.MaxLevel - data.ValueRO.Level : level;
 
                     data.ValueRW.Level += level;
-                    ecb.AppendToBuffer(entity, new LevelUpEventBuffer() {SkillPoint = level});
+                    ecb.AppendToBuffer(entity, new LevelUpEventBuffer() {SkillPointGain = level} );
                 }
                 levelGainBuffer.Clear();
             }

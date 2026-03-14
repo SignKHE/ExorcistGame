@@ -10,6 +10,7 @@ namespace ExorcistGame.Level
         protected override void OnCreate()
         {
             LevelUpEvent = new UnityEvent();
+            SkillPoint = new ReactiveProperty<uint>(0);
         }
 
         protected override void OnUpdate()
@@ -17,8 +18,9 @@ namespace ExorcistGame.Level
             if(!SystemAPI.TryGetSingletonBuffer<LevelUpEventBuffer>(out var levelUpEventBuffer) || levelUpEventBuffer.IsEmpty) return;
             foreach (var skillPoint in levelUpEventBuffer)
             {
-                SkillPoint.Value += skillPoint.SkillPoint;
+                SkillPoint.Value += skillPoint.SkillPointGain;
             }
+            levelUpEventBuffer.Clear();
             LevelUpEvent.Invoke();
         }
 

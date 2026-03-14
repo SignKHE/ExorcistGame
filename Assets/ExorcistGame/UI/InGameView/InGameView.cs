@@ -33,6 +33,14 @@ namespace ExorcistGame.UI.InGameView
                     expBarImage.fillAmount = (float)experience / (float)(viewModel as InGameViewModel).MaxExperience.CurrentValue;
                 })
                 .AddTo(disposables);
+            
+            (viewModel as InGameViewModel)?.LevelValue
+                .DistinctUntilChanged()
+                .Subscribe(level =>
+                {
+                    Debug.Log($"레벨업 : {level}");
+                })
+                .AddTo(disposables);
         }
 
         protected override void Reset()
