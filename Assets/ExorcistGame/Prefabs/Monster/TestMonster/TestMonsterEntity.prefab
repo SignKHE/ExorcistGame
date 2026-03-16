@@ -68,4 +68,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca70232a8004c8ca07e976afac060ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Character.Monster.MonsterAuthoring
-  projectilePrefab: {fileID: 5453051321186680474, guid: bbd67e2d5b5a2e64f8b9384898eb261d, type: 3}
+  MonsterData: {fileID: 11400000, guid: e1370a101fa504c4bbf465e962ba644b, type: 2}

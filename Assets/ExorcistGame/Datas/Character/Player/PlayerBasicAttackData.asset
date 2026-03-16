@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ca83dc2fe6a454a99e44aae25bd72d, type: 3}
+  m_Name: PlayerBasicAttackData
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.BasicAttackSO
+  AttackData:
+    AttackRange: 10
+    AttackTime: 0.1
+    AttackTimer: 0
+    ReloadTime: 0.1
+    ReloadTimer: 0

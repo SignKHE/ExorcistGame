@@ -1,8 +1,9 @@
-using Unity.Collections;
+using System;
 using Unity.Entities;
 
 namespace ExorcistGame.Skill
 {
+    [Serializable]
     public struct ProjectileSpawner : IComponentData
     {
         /// <summary>
@@ -12,13 +13,13 @@ namespace ExorcistGame.Skill
 
         public ProjectileData ProjectileDataPreset;
         
+        public int PoolSize;
+        
         public float ProjectileSpeed;
         /// <summary>
         /// 스포너 초기화 상태값
         /// </summary>
         public bool IsInitialized;
-
-        public readonly int PoolSize;
 
         public ProjectileSpawner(Entity projectilePrefab,ProjectileData projectileDataPreset, int poolSize, float projectileSpeed= 8f)
         {

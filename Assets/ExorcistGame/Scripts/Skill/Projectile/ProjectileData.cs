@@ -1,8 +1,10 @@
+using System;
 using Unity.Entities;
 using Unity.Mathematics;
 
 namespace ExorcistGame.Skill
 {
+    [Serializable]
     public struct ProjectileData : IComponentData, IEnableableComponent
     {
         /// <summary>
@@ -34,9 +36,10 @@ namespace ExorcistGame.Skill
             Instigator = instigator;
         }
 
-        public void SetInstigator(Entity instigator)
+        public ProjectileData SetInstigator(Entity instigator)
         {
             Instigator = instigator;
+            return this;
         }
     }
 

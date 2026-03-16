@@ -1,17 +1,15 @@
 using ExorcistGame.Character.State;
-using ExorcistGame.Seeker;
+using ExorcistGame.Data;
 using ExorcistGame.Skill;
 using ExorcistGame.VisualSync;
 using UnityEngine;
 using Unity.Entities;
-using Unity.Mathematics;
 
 namespace ExorcistGame.Character.Player
 {
     public class PlayerAuthoring : MonoBehaviour
     {
-        public float speed = 5f;
-        public GameObject projectilePrefab;
+        public CharacterSO playerData;
         
         private class PlayerBaker : Baker<PlayerAuthoring>
         {
@@ -22,27 +20,17 @@ namespace ExorcistGame.Character.Player
                 AddComponent(entity, new PlayerTag());
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new VisualSyncTag());
-                AddComponent(entity, new MovementData() {Direction = float3.zero, Speed = authoring.speed});
-                AddComponent(entity, new AttackData() {
-                    AttackRange = 10f, 
-                    AttackTime = 0.1f, 
-                    AttackTimer = 0f, 
-                    ReloadTime = 0.1f, 
-                    ReloadTimer = 0f
-                });
+                AddComponent(entity, authoring.playerData.MovementData.MovementData);
+                AddComponent(entity, authoring.playerData.BasicAttackData.AttackData);
                 AddComponent(entity, new StateData() {IsInitialized = false});
-                AddComponent(entity, new ProjectileSpawner(
-                    GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic), 
-                    new ProjectileData(instigator:entity, damage:50f), 
-                    poolSize:3,
-                    projectileSpeed: 16f
-                    )
-                );
-                AddComponent(entity, new SeekerData()
+                AddComponent(entity, new ProjectileSpawner()
                 {
-                    Range = 10f, 
-                    TargetType = ETargetType.Monster
+                    PoolSize = authoring.playerData.ProjectileSpawnerData.ProjectileSpawnerData.PoolSize,
+                    ProjectilePrefab = GetEntity(authoring.playerData.ProjectileSpawnerData.ProjectilePrefab, TransformUsageFlags.Dynamic),
+                    ProjectileSpeed = authoring.playerData.ProjectileSpawnerData.ProjectileSpawnerData.ProjectileSpeed,
+                    ProjectileDataPreset = (authoring.playerData.ProjectileSpawnerData.ProjectileSpawnerData.ProjectileDataPreset).SetInstigator(entity)
                 });
+                AddComponent(entity, authoring.playerData.SeekerData.SeekerData);
             }
         }
     }

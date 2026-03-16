@@ -1,7 +1,9 @@
+using System;
 using Unity.Entities;
 
 namespace ExorcistGame.Character
 {
+    [Serializable]
     public struct AttackData : IComponentData
     {
         public Entity Target;

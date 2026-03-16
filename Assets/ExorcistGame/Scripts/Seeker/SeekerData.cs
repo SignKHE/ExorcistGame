@@ -1,8 +1,9 @@
-using Unity.Collections;
+using System;
 using Unity.Entities;
 
 namespace ExorcistGame.Seeker
 {
+    [Serializable]
     public struct SeekerData :  IComponentData, IEnableableComponent
     {
         public float Range;

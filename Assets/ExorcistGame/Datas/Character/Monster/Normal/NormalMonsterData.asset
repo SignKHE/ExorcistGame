@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13308edd98b2e974eb110872137e5e7c, type: 3}
+  m_Name: NormalMonsterData
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Data.CharacterSO
+  MovementData: {fileID: 11400000, guid: dc5d0484bd436e04db654244f0c5c31b, type: 2}
+  BasicAttackData: {fileID: 11400000, guid: 32216f5e45a108f41a62f00138f1615c, type: 2}
+  ProjectileSpawnerData: {fileID: 11400000, guid: 7402fb25ae5cd894699b1fa88e166349, type: 2}
+  SeekerData: {fileID: 11400000, guid: 9b3e19e0b19232743841604cce6b4061, type: 2}

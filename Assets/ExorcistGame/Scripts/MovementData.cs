@@ -1,8 +1,10 @@
+using System;
 using Unity.Entities;
 using Unity.Mathematics;
 
 namespace ExorcistGame
 {
+    [Serializable]
     public struct MovementData : IComponentData
     {
         public float3 Direction;
