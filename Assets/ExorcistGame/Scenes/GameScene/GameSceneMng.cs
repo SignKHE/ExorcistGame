@@ -50,7 +50,10 @@ namespace ExorcistGame
             
             while (_gameTimer.LeftTime.Value >= 0f)
             {
-                Spawn();
+                if (Mathf.FloorToInt(_gameTimer.LeftTime.Value) % 2 == 0)
+                {
+                    Spawn();
+                }
                 await Awaitable.WaitForSecondsAsync(1f);
                 Debug.Log($"카운트 다운");
                 _gameTimer.CountDown();
