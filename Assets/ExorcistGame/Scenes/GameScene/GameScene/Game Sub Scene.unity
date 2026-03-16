@@ -148,9 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233d601cd05843c0a8f8a8c7e3e673d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Map.MapConfigAuthoring
-  chunkSize: 50
-  viewPrefab: 1
-  chunkPrefab: {fileID: 4395614072053608012, guid: 0a391675e7e7ae845af6379bb465cc92, type: 3}
+  data: {fileID: 11400000, guid: 9338c2b7c1c965a4398149bb753d12f4, type: 2}
 --- !u!4 &521069265
 Transform:
   m_ObjectHideFlags: 0
@@ -195,9 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c5d27635f28cf4a9cb0f01a62cf9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Spawn.SpawnConfigAuthoring
-  monsterPrefab: {fileID: 5703890109475972305, guid: 2610563d2e822804d85691c7134128c6, type: 3}
-  radius: 15
-  spawnMax: 60
+  data: {fileID: 11400000, guid: 34f467cd1b1074c4992af327a99962a0, type: 2}
 --- !u!4 &1669101673
 Transform:
   m_ObjectHideFlags: 0
@@ -242,8 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f79726bb3147b0a63d99d64ee58dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.Level.LevelConfigAuthoring
-  maxLevel: 100
-  maxExperience: 100
+  data: {fileID: 11400000, guid: 1302fdebe6196dc4991be3b4e9250c45, type: 2}
 --- !u!4 &2071432374
 Transform:
   m_ObjectHideFlags: 0

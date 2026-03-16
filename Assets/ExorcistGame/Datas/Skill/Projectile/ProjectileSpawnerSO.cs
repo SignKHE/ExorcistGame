@@ -8,6 +8,7 @@ namespace ExorcistGame
     public class ProjectileSpawnerSO : ScriptableObject
     {
         [FormerlySerializedAs("ProjectileSpawnerData")] public ProjectileSpawner Data;
+        [Label("투사체 프리팹")]
         public GameObject ProjectilePrefab;
     }
 }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3db45df2bf0bdb4ebb7d305c34a5f05, type: 3}
+  m_Name: MapConfigData
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.MapConfigSO
+  ChunkSize: 50
+  ViewDistance: 1
+  ChunkPrefab: {fileID: 4395614072053608012, guid: 0a391675e7e7ae845af6379bb465cc92, type: 3}

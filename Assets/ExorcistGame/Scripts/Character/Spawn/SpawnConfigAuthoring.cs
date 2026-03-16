@@ -5,12 +5,7 @@ namespace ExorcistGame.Character.Spawn
 {
     public class SpawnConfigAuthoring : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject monsterPrefab;
-        [SerializeField]
-        private float radius = 15.0f;
-        [SerializeField]
-        private int spawnMax = 60;
+        [SerializeField] private SpawnConfigSO data;
         
         private class SpawnConfigBaker : Baker<SpawnConfigAuthoring>
         {
@@ -20,14 +15,14 @@ namespace ExorcistGame.Character.Spawn
 
                 AddComponent(spawnConfigEntity, new SpawnConfig
                 {
-                    Radius = authoring.radius,
-                    SpawnMax = authoring.spawnMax
+                    Radius = authoring.data.Radius,
+                    SpawnMax = authoring.data.SpawnMax
                 });
                 
                 Entity spawnPoolEntity = CreateAdditionalEntity(TransformUsageFlags.None, false, "SpawnPoolEntity");
                 AddComponent(spawnPoolEntity, new SpawnPoolData
                 {
-                    MonsterPrefab = GetEntity(authoring.monsterPrefab, TransformUsageFlags.Dynamic),
+                    MonsterPrefab = GetEntity(authoring.data.monsterPrefab, TransformUsageFlags.Dynamic),
                 });
                 AddBuffer<SpawnPoolBuffer>(spawnPoolEntity);
                 AddBuffer<SpawnRequestData>(spawnPoolEntity);

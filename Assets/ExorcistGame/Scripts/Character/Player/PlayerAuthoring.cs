@@ -20,15 +20,15 @@ namespace ExorcistGame.Character.Player
                 AddComponent(entity, new PlayerTag());
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new VisualSyncTag());
-                AddComponent(entity, authoring.playerData.MovementData.Data);
-                AddComponent(entity, authoring.playerData.BasicAttackData.Data);
+                AddComponent(entity, authoring.playerData.MovementData.Data.Reset());
+                AddComponent(entity, authoring.playerData.BasicAttackData.Data.Reset());
                 AddComponent(entity, new StateData() {IsInitialized = false});
                 AddComponent(entity, new ProjectileSpawner()
                 {
                     PoolSize = authoring.playerData.ProjectileSpawnerData.Data.PoolSize,
                     ProjectilePrefab = GetEntity(authoring.playerData.ProjectileSpawnerData.ProjectilePrefab, TransformUsageFlags.Dynamic),
                     ProjectileSpeed = authoring.playerData.ProjectileSpawnerData.Data.ProjectileSpeed,
-                    ProjectileDataPreset = (authoring.playerData.ProjectileSpawnerData.Data.ProjectileDataPreset).SetInstigator(entity)
+                    ProjectileDataPreset = (authoring.playerData.ProjectileSpawnerData.Data.ProjectileDataPreset).SetInstigator(entity).Reset()
                 });
                 AddComponent(entity, authoring.playerData.SeekerData.Data);
             }

@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ca83dc2fe6a454a99e44aae25bd72d, type: 3}
-  m_Name: PlayerBasicAttackData
-  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.BasicAttackSO
-  Data:
-    AttackRange: 15
-    AttackTime: 0.1
-    ReloadTime: 0.1
+  m_Script: {fileID: 11500000, guid: 11b58abe1c2c75d4594651ff1fc16ed1, type: 3}
+  m_Name: LevelConfigData
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.LevelConfigSO
+  MaxLevel: 100
+  MaxExperience: 100

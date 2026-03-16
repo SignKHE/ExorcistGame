@@ -6,6 +6,7 @@ namespace ExorcistGame.Data
     [CreateAssetMenu(fileName = "MovementData", menuName = "ExorcistGame/Movement")]
     public class MovementSO : ScriptableObject
     {
-        [FormerlySerializedAs("MovementData")] public MovementData Data;
+        [FormerlySerializedAs("MovementData")]
+        public MovementData Data;
     }
 }

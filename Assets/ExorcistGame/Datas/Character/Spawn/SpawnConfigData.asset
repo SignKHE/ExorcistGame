@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13bb97175b4823e499498f464da4a312, type: 3}
+  m_Name: SpawnConfigData
+  m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.SpawnConfigSO
+  Radius: 15
+  SpawnMax: 60
+  monsterPrefab: {fileID: 5703890109475972305, guid: 2610563d2e822804d85691c7134128c6, type: 3}
