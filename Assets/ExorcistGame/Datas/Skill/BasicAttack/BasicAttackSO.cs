@@ -1,11 +1,12 @@
 using ExorcistGame.Character;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ExorcistGame
 {
     [CreateAssetMenu(fileName = "BasicAttackData", menuName = "ExorcistGame/BasicAttack")]
     public class BasicAttackSO : ScriptableObject
     {
-        public AttackData AttackData;
+        [FormerlySerializedAs("AttackData")] public AttackData Data;
     }
 }

@@ -24,16 +24,16 @@ namespace ExorcistGame.Character.Monster
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new HPData(hp:100f));
                 
-                AddComponent(entity, authoring.MonsterData.MovementData.MovementData);
-                AddComponent(entity, authoring.MonsterData.BasicAttackData.AttackData);
+                AddComponent(entity, authoring.MonsterData.MovementData.Data);
+                AddComponent(entity, authoring.MonsterData.BasicAttackData.Data);
                 AddComponent(entity, new StateData() {IsInitialized = false});
                 AddComponent(entity, new ProjectileSpawner(
                     projectilePrefab: GetEntity(authoring.MonsterData.ProjectileSpawnerData.ProjectilePrefab, TransformUsageFlags.Dynamic), 
-                    poolSize: authoring.MonsterData.ProjectileSpawnerData.ProjectileSpawnerData.PoolSize,
-                    projectileSpeed: authoring.MonsterData.ProjectileSpawnerData.ProjectileSpawnerData.ProjectileSpeed,
-                    projectileDataPreset: authoring.MonsterData.ProjectileSpawnerData.ProjectileSpawnerData.ProjectileDataPreset.SetInstigator(entity)
+                    poolSize: authoring.MonsterData.ProjectileSpawnerData.Data.PoolSize,
+                    projectileSpeed: authoring.MonsterData.ProjectileSpawnerData.Data.ProjectileSpeed,
+                    projectileDataPreset: authoring.MonsterData.ProjectileSpawnerData.Data.ProjectileDataPreset.SetInstigator(entity)
                     ));
-                AddComponent(entity, authoring.MonsterData.SeekerData.SeekerData);
+                AddComponent(entity, authoring.MonsterData.SeekerData.Data);
             }
         }
     }
