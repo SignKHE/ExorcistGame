@@ -5,6 +5,9 @@ using Unity.Transforms;
 
 namespace ExorcistGame.Skill
 {
+    /// <summary>
+    /// 투사체 생명주기 시스템
+    /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [BurstCompile]
     public partial struct ProjectileLifeSystem : ISystem

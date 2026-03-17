@@ -6,6 +6,9 @@ using Unity.Transforms;
 
 namespace ExorcistGame.Skill
 {
+    /// <summary>
+    /// 투사체 스포너 초기화 시스템
+    /// </summary>
     [BurstCompile]
     public partial struct InitializeProjectileSpawnerSystem : ISystem
     {
@@ -14,11 +17,11 @@ namespace ExorcistGame.Skill
         {
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             
-            foreach (var (spawner, entity) in SystemAPI.Query<RefRW<ProjectileSpawner>>().WithEntityAccess())
+            foreach (var (spawner, entity) 
+                     in SystemAPI.Query<RefRW<ProjectileSpawner>>()
+                         .WithNone<ProjectileSpawnPoolBuffer, ProjectileSpawnRequestBuffer>()
+                         .WithEntityAccess())
             {
-                // 아직 오브젝트 풀 초기화를 하지 않았다면 초기화
-                if (spawner.ValueRO.IsInitialized) continue;
-
                 bool isPlayer = SystemAPI.HasComponent<PlayerTag>(entity);
                 
                 ecb.AddBuffer<ProjectileSpawnRequestBuffer>(entity);
@@ -40,7 +43,6 @@ namespace ExorcistGame.Skill
                 }
                 
                 instances.Dispose();
-                spawner.ValueRW.IsInitialized = true;
             }
             
             ecb.Playback(state.EntityManager);

@@ -9,6 +9,9 @@ using Unity.Transforms;
 
 namespace ExorcistGame.Skill
 {
+    /// <summary>
+    /// 투사체 충돌 처리 시스템
+    /// </summary>
     [BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(PhysicsSystemGroup))]

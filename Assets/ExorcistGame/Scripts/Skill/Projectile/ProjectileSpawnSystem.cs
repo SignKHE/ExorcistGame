@@ -6,6 +6,9 @@ using Unity.Transforms;
 
 namespace ExorcistGame.Skill
 {
+    /// <summary>
+    /// 투사체 스폰 시스템
+    /// </summary>
     [BurstCompile]
     public partial struct ProjectileSpawnSystem : ISystem
     {
@@ -14,13 +17,12 @@ namespace ExorcistGame.Skill
         {
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             
-            foreach (var (spawner, spawnBuffer, spawnPoolBuffers, spawnerEntity) 
+            foreach (var (spawner, requestBuffer, spawnPoolBuffers, spawnerEntity) 
                      in SystemAPI.Query<RefRO<ProjectileSpawner>, DynamicBuffer<ProjectileSpawnRequestBuffer>, DynamicBuffer<ProjectileSpawnPoolBuffer>>().WithEntityAccess())
             {
-                if (!spawner.ValueRO.IsInitialized) continue;
-                if (spawnBuffer.IsEmpty) continue;
+                if (requestBuffer.IsEmpty) continue;
 
-                foreach (var request in spawnBuffer)
+                foreach (var request in requestBuffer)
                 {
                     if (spawnPoolBuffers.IsEmpty)
                     {
@@ -45,7 +47,7 @@ namespace ExorcistGame.Skill
                 }
             
                 // 처리 끝난 버퍼 비우기
-                spawnBuffer.Clear();
+                requestBuffer.Clear();
             }
             
             ecb.Playback(state.EntityManager);

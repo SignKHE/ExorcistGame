@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace ExorcistGame.Skill
 {
+    /// <summary>
+    /// 투사체 정보
+    /// </summary>
     [Serializable]
     public struct ProjectileData : IComponentData, IEnableableComponent
     {
