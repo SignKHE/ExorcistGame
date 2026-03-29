@@ -1,5 +1,6 @@
 using ExorcistGame.Character.State;
 using ExorcistGame.Skill;
+using ExorcistGame.Skill.BasicAttack;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -18,8 +19,8 @@ namespace ExorcistGame.Character.Player
             var transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true);
             float deltaTime = SystemAPI.Time.DeltaTime;
 
-            foreach (var (attackData, movementData, transform, entity)
-                     in SystemAPI.Query<RefRW<AttackData>, RefRW<MovementData>, RefRW<LocalTransform>>()
+            foreach (var (attackData, movementData, transform, children, entity)
+                     in SystemAPI.Query<RefRW<AttackData>, RefRW<MovementData>, RefRW<LocalTransform>, DynamicBuffer<Child>>()
                          .WithAll<PlayerTag, AttackState>().WithEntityAccess())
             {
                 float3 playerPos = transform.ValueRO.Position;
@@ -73,13 +74,16 @@ namespace ExorcistGame.Character.Player
                         {
                             // 여기서 공격
                             // UnityEngine.Debug.Log($"플레이어 공격");
-                            var spawnBuffer = SystemAPI.GetBuffer<ProjectileSpawnRequestBuffer>(entity);
-
-                            spawnBuffer.Add(new ProjectileSpawnRequestBuffer()
-                            { 
-                                SpawnLocation = transform.ValueRO.Position + new float3(0f, 1f, 0f),
-                                Direction = targetDirection
-                            });
+                            foreach (var child in children)
+                            {
+                                if (SystemAPI.HasComponent<BasicAttackTag>(child.Value))
+                                {
+                                    ecb.AppendToBuffer(child.Value, new SkillRequestBuffer()
+                                    {
+                                        TargetPosition = targetPos
+                                    });
+                                }
+                            }
                         }
                         attackData.ValueRW.AttackTimer += deltaTime;
                     }
