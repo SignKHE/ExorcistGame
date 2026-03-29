@@ -19,7 +19,7 @@ namespace ExorcistGame.Character.Player
                 
                 AddComponent(entity, new PlayerTag());
                 AddComponent(entity, new CharacterTag());
-                AddComponent(entity, new VisualSyncTag());
+                AddComponent(entity, new VisualSyncData() { VisualObject = EVisualObject.Player });
                 AddComponent(entity, authoring.playerData.MovementData.Data.Reset());
                 AddComponent(entity, authoring.playerData.BasicAttackData.Data.Reset());
                 AddComponent(entity, new StateData() {IsInitialized = false});

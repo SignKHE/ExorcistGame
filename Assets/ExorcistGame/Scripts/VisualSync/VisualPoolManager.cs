@@ -6,12 +6,12 @@ using UnityEngine.Serialization;
 
 namespace ExorcistGame.VisualSync
 {
-    public class CharacterPoolManager : MonoBehaviour
+    public class VisualPoolManager : MonoBehaviour
     {
         [SerializeField]
-        private List<CharacterPool> characterPools = new List<CharacterPool>();
+        private List<VisualPool> visualPools = new List<VisualPool>();
         
-        public static CharacterPoolManager Instance { get; private set; }
+        public static VisualPoolManager Instance { get; private set; }
 
         private void Awake()
         {
@@ -20,54 +20,54 @@ namespace ExorcistGame.VisualSync
 
         private void Start()
         {
-            foreach (var characterPool in characterPools)
+            foreach (var visualPool in visualPools)
             {
-                characterPool.Initialize();
+                visualPool.Initialize();
             }
         }
 
-        public GameObject GetCharacter(ECharacterType type)
+        public GameObject GetVisual(EVisualObject type)
         {
-            return characterPools.FirstOrDefault(characterPool => characterPool.CharacterType == type)?.GetCharacter();
+            return visualPools.FirstOrDefault(visualPool => visualPool.VisualObjectType == type)?.GetVisual();
         }
 
-        public void ReturnCharacter(GameObject character, ECharacterType type)
+        public void ReturnVisual(GameObject visualObject, EVisualObject type)
         {
-            characterPools.FirstOrDefault(characterPool => characterPool.CharacterType == type)?.ReturnCharacter(character);
+            visualPools.FirstOrDefault(visualPool => visualPool.VisualObjectType == type)?.ReturnVisual(visualObject);
         }
 
         [Serializable]
-        public class CharacterPool
+        public class VisualPool
         {
             [SerializeField]
-            private ECharacterType characterType;
+            private EVisualObject visualObjectType;
             [SerializeField]
             private int _poolSize = 100;
             /// <summary>
             /// 캐릭터 프리팹
             /// </summary>
             [SerializeField]
-            private GameObject _characterPrefab;
+            private GameObject _visualPrefab;
             /// <summary>
             /// 캐릭터 풀 스택
             /// </summary>
             private readonly Stack<GameObject> _poolStack = new ();
 
-            public ECharacterType CharacterType {get => characterType;}
+            public EVisualObject VisualObjectType {get => visualObjectType;}
             public void Initialize()
             {
                 for (int i = 0; i < _poolSize; i++)
                 {
-                    ReturnCharacter(Instantiate(_characterPrefab));
+                    ReturnVisual(Instantiate(_visualPrefab));
                 }
             }
             
-            public GameObject GetCharacter()
+            public GameObject GetVisual()
             {
                 return _poolStack.Pop();
             }
 
-            public void ReturnCharacter(GameObject obj)
+            public void ReturnVisual(GameObject obj)
             {
                 _poolStack.Push(obj);
                 _poolStack.Peek().SetActive(false);

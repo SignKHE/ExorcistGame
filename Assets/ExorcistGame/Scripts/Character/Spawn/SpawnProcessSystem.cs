@@ -47,7 +47,8 @@ namespace ExorcistGame.Character.Spawn
             var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
 
             foreach (var (poolData, poolDataBuffer, requestDataBuffer, entity) 
-                     in SystemAPI.Query<RefRO<SpawnPoolData>, DynamicBuffer<SpawnPoolBuffer>, DynamicBuffer<SpawnRequestData>>().WithEntityAccess())
+                     in SystemAPI.Query<RefRO<SpawnPoolData>, DynamicBuffer<SpawnPoolBuffer>, DynamicBuffer<SpawnRequestData>>()
+                         .WithEntityAccess())
             {
                 if(requestDataBuffer.IsEmpty) continue;
                 

@@ -23,7 +23,7 @@ namespace ExorcistGame.VisualSync
             // VisualSyncTag가 있는데 VisualData가 없는 엔티티 검색
             // 스폰 JOB에 추가
             Entities
-                .WithAll<VisualSyncTag>()
+                .WithAll<VisualSyncData>()
                 .WithNone<VisualData>()
                 .ForEach((Entity entity) =>
                 {
@@ -49,16 +49,8 @@ namespace ExorcistGame.VisualSync
             foreach (var entity in toSpawn)
             {
                  LocalTransform transform = SystemAPI.GetComponent<LocalTransform>(entity);
-                 ECharacterType characterType = ECharacterType.Monster;
-                 if (SystemAPI.HasComponent<PlayerTag>(entity))
-                 { 
-                     characterType = ECharacterType.Player;   
-                 }
-                 else if (SystemAPI.HasComponent<MonsterData>(entity))
-                 {
-                     characterType = ECharacterType.Monster;
-                 }
-                 GameObject visualGameObject = CharacterPoolManager.Instance.GetCharacter(characterType);
+                 EVisualObject characterType = SystemAPI.GetComponentRO<VisualSyncData>(entity).ValueRO.VisualObject;
+                 GameObject visualGameObject = VisualPoolManager.Instance.GetVisual(characterType);
                  visualGameObject.transform.position = transform.Position;
                  visualGameObject.SetActive(true);
                  EntityManager.AddComponentData(entity, new VisualData() {VisualObject = visualGameObject});
@@ -67,18 +59,9 @@ namespace ExorcistGame.VisualSync
             // Despawn 처리
             foreach (var entity in toDespawn)
             {
-                ECharacterType characterType = ECharacterType.Monster;
-                if (SystemAPI.HasComponent<PlayerTag>(entity))
-                { 
-                    characterType = ECharacterType.Player;   
-                }
-                else if (SystemAPI.HasComponent<MonsterData>(entity))
-                {
-                    characterType = ECharacterType.Monster;
-                }
-                
+                EVisualObject characterType = SystemAPI.GetComponentRO<VisualSyncData>(entity).ValueRO.VisualObject;
                 VisualData visualData = EntityManager.GetComponentData<VisualData>(entity);
-                CharacterPoolManager.Instance.ReturnCharacter(visualData.VisualObject, characterType);
+                VisualPoolManager.Instance.ReturnVisual(visualData.VisualObject, characterType);
                 
                 EntityManager.RemoveComponent<VisualData>(entity);
             }

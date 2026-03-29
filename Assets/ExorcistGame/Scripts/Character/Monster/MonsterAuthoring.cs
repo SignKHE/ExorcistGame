@@ -19,7 +19,7 @@ namespace ExorcistGame.Character.Monster
             {
                 Entity entity = GetEntity(TransformUsageFlags.Dynamic);
                 
-                AddComponent(entity, new VisualSyncTag());
+                AddComponent(entity, new VisualSyncData() {VisualObject = EVisualObject.Monster});
                 AddComponent(entity, new MonsterData());
                 AddComponent(entity, new CharacterTag());
                 AddComponent(entity, new HPData(hp:100f));
