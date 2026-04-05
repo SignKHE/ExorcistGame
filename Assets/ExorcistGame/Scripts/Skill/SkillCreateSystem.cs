@@ -27,6 +27,9 @@ namespace ExorcistGame.Skill
                     Entity requestEntity = request.RequestSkill switch
                     {
                         ESkill.BasicAttack => skillConfig.BaseAttack,
+                        ESkill.FireEnergy => skillConfig.FireEnergy,
+                        ESkill.MetalEnergy => skillConfig.MetalEnergy,
+                        ESkill.WindEnergy => skillConfig.WindEnergy,
                         _ => Entity.Null
                     };
                     

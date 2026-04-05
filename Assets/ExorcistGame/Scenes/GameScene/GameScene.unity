@@ -970,8 +970,17 @@ MonoBehaviour:
     _poolSize: 100
     _visualPrefab: {fileID: 5703890109475972305, guid: a52e703148b92b94194c486d87caf42b, type: 3}
   - visualObjectType: 2
-    _poolSize: 100
+    _poolSize: 10
     _visualPrefab: {fileID: 4762733163214776954, guid: 55f3d19285274444299d6ef9d03733c7, type: 3}
+  - visualObjectType: 3
+    _poolSize: 10
+    _visualPrefab: {fileID: 4762733163214776954, guid: b0cb1df278f16a443a6cafed19b3aec7, type: 3}
+  - visualObjectType: 4
+    _poolSize: 10
+    _visualPrefab: {fileID: 4762733163214776954, guid: 4d84641d642352842991a3b08ef9f06a, type: 3}
+  - visualObjectType: 5
+    _poolSize: 10
+    _visualPrefab: {fileID: 4762733163214776954, guid: 54659ca9a660bfa4ca040b534832e1ba, type: 3}
 --- !u!114 &1708897155
 MonoBehaviour:
   m_ObjectHideFlags: 0

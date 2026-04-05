@@ -4,6 +4,9 @@ namespace ExorcistGame.VisualSync
     {
         Player,
         Monster,
-        BasicAttackProjectile
+        BasicAttackProjectile,
+        FireEnergyProjectile,
+        MetalEnergyProjectile,
+        WindEnergyProjectile
     }
 }

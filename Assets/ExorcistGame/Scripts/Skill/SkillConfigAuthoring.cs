@@ -18,7 +18,10 @@ namespace ExorcistGame.Skill
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new SkillConfig()
                 {
-                    BaseAttack = GetEntity(authoring.skillConfigData.basicAttack , TransformUsageFlags.Dynamic)
+                    BaseAttack = GetEntity(authoring.skillConfigData.basicAttack , TransformUsageFlags.Dynamic),
+                    FireEnergy = GetEntity(authoring.skillConfigData.fireEnergy, TransformUsageFlags.Dynamic),
+                    MetalEnergy = GetEntity(authoring.skillConfigData.metalEnergy, TransformUsageFlags.Dynamic),
+                    WindEnergy = GetEntity(authoring.skillConfigData.windEnergy, TransformUsageFlags.Dynamic)
                 });
             }
         }

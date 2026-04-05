@@ -29,6 +29,9 @@ namespace ExorcistGame.Character.Player
                 {
                     RequestSkill = ESkill.BasicAttack
                 });
+                //AppendToBuffer(entity, new SkillCreateRequest(){RequestSkill = ESkill.FireEnergy});
+                //AppendToBuffer(entity, new SkillCreateRequest(){RequestSkill = ESkill.MetalEnergy});
+                //AppendToBuffer(entity, new SkillCreateRequest(){RequestSkill = ESkill.WindEnergy});
             }
         }
     }

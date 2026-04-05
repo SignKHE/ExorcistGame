@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: SkillConfigData
   m_EditorClassIdentifier: Assembly-CSharp::ExorcistGame.SkillConfigSO
   basicAttack: {fileID: 1200461875148623137, guid: 398d748c2d39de44286248f4a29ad574, type: 3}
+  fireEnergy: {fileID: 9147229842463493244, guid: 9a557d9f216dbb84b85b631c13802a99, type: 3}
+  metalEnergy: {fileID: 3551963961924858904, guid: ff6cf6c4537e55748b9019cda68925d0, type: 3}
+  windEnergy: {fileID: 4710388965150216153, guid: 73f1262b985740442a7fb92ce423df67, type: 3}

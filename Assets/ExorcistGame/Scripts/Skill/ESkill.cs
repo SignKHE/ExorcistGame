@@ -5,6 +5,9 @@ namespace ExorcistGame.Skill
     /// </summary>
     public enum ESkill
     {
-        BasicAttack
+        BasicAttack,
+        FireEnergy,
+        MetalEnergy,
+        WindEnergy
     }
 }

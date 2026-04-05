@@ -8,5 +8,8 @@ namespace ExorcistGame.Skill
     public struct SkillConfig : IComponentData
     {
         public Entity BaseAttack;
+        public Entity FireEnergy;
+        public Entity MetalEnergy;
+        public Entity WindEnergy;
     }
 }
