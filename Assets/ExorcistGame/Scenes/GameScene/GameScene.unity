@@ -908,6 +908,7 @@ MonoBehaviour:
   spawnManager: {fileID: 1708897152}
   levelManager: {fileID: 1708897155}
   inGameViewPrefab: {fileID: 2746284520762386618, guid: 44e93b684e1e297419c271b8e3103efc, type: 3}
+  levelUpViewPrefab: {fileID: 2746284520762386618, guid: 4d9c8a1be5f77a74e8e43bf39feddcbe, type: 3}
 --- !u!4 &1708897151
 Transform:
   m_ObjectHideFlags: 0

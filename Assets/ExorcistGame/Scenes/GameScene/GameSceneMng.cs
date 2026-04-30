@@ -2,6 +2,7 @@ using ExorcistGame.Character.Spawn;
 using ExorcistGame.Level;
 using ExorcistGame.UI;
 using ExorcistGame.UI.InGameView;
+using ExorcistGame.UI.LevelUpView;
 using R3;
 using Unity.Entities;
 using UnityEngine;
@@ -16,7 +17,9 @@ namespace ExorcistGame
         [SerializeField] private LevelMng levelManager;
         [SerializeField]
         private GameObject inGameViewPrefab;
-
+        [SerializeField]
+        private GameObject levelUpViewPrefab;
+        
         private GameTimer _gameTimer = new GameTimer(600.0f);
         private LevelModelSystem _levelModelSystem;
 
@@ -30,6 +33,14 @@ namespace ExorcistGame
             if (world == null) return;
             _levelModelSystem = world.GetExistingSystemManaged<LevelModelSystem>();
 
+            _viewModel = new InGameViewModel(_gameTimer, _levelModelSystem);
+            _viewModel.LevelValue.DistinctUntilChanged()
+                .Where(x => x > 0)
+                .Subscribe(level =>
+                {
+                    LevelUpEvent();
+                }
+            );
             CreateInGameUI();
 
             await Awaitable.WaitForSecondsAsync(3f);
@@ -40,10 +51,31 @@ namespace ExorcistGame
 
         private void CreateInGameUI()
         {
-            _viewModel = new InGameViewModel(_gameTimer, _levelModelSystem);
             UIManager.Instance.CreateUI(inGameViewPrefab,_viewModel, UIManager.EUIType.Main);
         }
 
+        private void LevelUpEvent()
+        {
+            GamePause();
+            Debug.Log("GameSceneMng LevelUpEvent");
+            LevelUpViewModel levelUpViewModel = new LevelUpViewModel(GameResume);
+            UIManager.Instance.CreateUI(levelUpViewPrefab,levelUpViewModel, UIManager.EUIType.Popup);
+        }
+
+        private void GamePause()
+        {
+            var simulationGroup = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SimulationSystemGroup>();
+            simulationGroup.Enabled = false;
+            Time.timeScale = 0f;
+        }
+
+        private void GameResume()
+        {
+            var simulationGroup = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SimulationSystemGroup>();
+            simulationGroup.Enabled = true;
+            Time.timeScale = 1f;
+        }
+        
         private async void GameLogic()
         {
             Debug.Log($"게임로직 시작");
